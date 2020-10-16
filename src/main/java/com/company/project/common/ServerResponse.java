@@ -25,7 +25,10 @@ public class ServerResponse<T> implements Serializable {
 
     private T data;
 
-    // Jackson反序列化需要无参构造函数
+    /**
+     * 空参构造函数
+     * 注：Jackson反序列化需要无参构造函数
+     */
     public ServerResponse() {
     }
 
@@ -55,34 +58,34 @@ public class ServerResponse<T> implements Serializable {
     }
 
     public static <T> ServerResponse<T> success() {
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDesc());
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDesc());
     }
 
     public static <T> ServerResponse<T> success(T data) {
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDesc(), data);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDesc(), data);
     }
 
     public static <T> ServerResponse<T> successMsg(String msg) {
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), msg);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(), msg);
     }
 
     public static <T> ServerResponse<T> success(String msg, T data) {
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), msg, data);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(), msg, data);
     }
 
     public static <T> ServerResponse<T> fail() {
-        return new ServerResponse<T>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc());
+        return new ServerResponse<>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc());
     }
 
     public static <T> ServerResponse<T> fail(String errorMessage) {
-        return new ServerResponse<T>(ResponseCode.ERROR.getCode(), errorMessage);
+        return new ServerResponse<>(ResponseCode.ERROR.getCode(), errorMessage);
     }
 
     public static <T> ServerResponse<T> fail(BaseCommonError commonError) {
-        return new ServerResponse<T>(commonError.getErrorCode(), commonError.getErrorMsg());
+        return new ServerResponse<>(commonError.getErrorCode(), commonError.getErrorMsg());
     }
 
     public static <T> ServerResponse<T> fail(int errorCode, String errorMessage) {
-        return new ServerResponse<T>(errorCode, errorMessage);
+        return new ServerResponse<>(errorCode, errorMessage);
     }
 }
