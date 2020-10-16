@@ -18,8 +18,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author qianshuailong
  */
 @Profile({"dev", "test"})
-@Configuration
 @EnableSwagger2
+@Configuration
 public class Swagger2Config {
 
     private static final String BASE_PACKAGE = "com.company.project.springbootproject.controller";
@@ -27,7 +27,7 @@ public class Swagger2Config {
     /**
      * swagger2的配置文件
      *
-     * @return
+     * @return swagger2配置
      */
     @Bean
     public Docket createRestApi() {
@@ -44,7 +44,7 @@ public class Swagger2Config {
     /**
      * 构建api文档的详细信息函数
      *
-     * @return
+     * @return api文档信息
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
