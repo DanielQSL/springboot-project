@@ -64,4 +64,14 @@ public class ApplicationContextUtil implements ApplicationContextAware {
         return getApplicationContext().getBean(name, clazz);
     }
 
+    /**
+     * 通过name判断容器中的是否存在该Bean
+     *
+     * @param name 名字
+     * @return 是否存在
+     */
+    public static boolean containsBean(String name) {
+        return getApplicationContext().containsBean(name);
+    }
+
 }
