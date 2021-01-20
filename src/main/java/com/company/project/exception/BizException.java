@@ -11,7 +11,7 @@ public class BizException extends RuntimeException {
 
     private static final long serialVersionUID = 4564124491192825748L;
 
-    private int code;
+    private Integer code;
 
     public BizException() {
         super();
@@ -21,7 +21,7 @@ public class BizException extends RuntimeException {
         super(message);
     }
 
-    public BizException(int code, String message) {
+    public BizException(Integer code, String message) {
         super(message);
         this.setCode(code);
     }
@@ -34,7 +34,7 @@ public class BizException extends RuntimeException {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 }

@@ -21,8 +21,8 @@ public enum LabelQueryTypeEnum {
     PUID(3, "user_id"),
     ;
 
-    private int code;
-    private String desc;
+    private final Integer code;
+    private final String desc;
 
     /**
      * 根据描述获取code

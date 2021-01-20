@@ -18,7 +18,7 @@ public enum CommonEnum implements BaseCommonError {
     PARAM_ILLEGAL(10011001, "参数不合法"),
     ;
 
-    private int code;
+    private final int code;
     private String desc;
 
     @Override
