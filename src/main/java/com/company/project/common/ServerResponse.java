@@ -19,7 +19,7 @@ public class ServerResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int code;
+    private Integer code;
 
     private String msg;
 
