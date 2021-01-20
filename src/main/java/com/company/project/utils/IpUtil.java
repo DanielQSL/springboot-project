@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * 获取用户IP
+ *
  * @author qianshuailong
  * @date 2020/11/28
  */

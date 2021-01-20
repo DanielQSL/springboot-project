@@ -2,6 +2,10 @@ package com.company.project.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+
 /**
  * 通用工具类
  *
@@ -26,6 +30,17 @@ public class CommonUtil {
             return mobile;
         }
         return mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+    }
+
+    /**
+     * 生成请求ID
+     * 规则：月日+uuid
+     *
+     * @return requestId
+     */
+    public static String generateRequestId() {
+        return DateTimeFormatter.ofPattern("MMdd").format(LocalDateTime.now())
+                + UUID.randomUUID().toString().replace("-", "");
     }
 
 }
