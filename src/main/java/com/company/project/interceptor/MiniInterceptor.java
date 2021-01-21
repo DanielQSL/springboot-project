@@ -6,6 +6,7 @@ import com.company.project.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +22,7 @@ import java.io.UnsupportedEncodingException;
  * @author DanielQSL
  */
 @Slf4j
+@Component
 public class MiniInterceptor implements HandlerInterceptor {
 
     @Autowired
