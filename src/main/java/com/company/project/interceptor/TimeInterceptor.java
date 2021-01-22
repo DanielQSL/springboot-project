@@ -35,7 +35,7 @@ public class TimeInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
+        log.info("执行完方法之后执行(Controller方法调用之后)，但是此时还没进行视图渲染");
     }
 
     @Override

@@ -32,17 +32,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(miniInterceptor)
+                .addPathPatterns("/**")
                 .addPathPatterns("/user/**")
-                .addPathPatterns("/bgm/**")
-                .addPathPatterns("/video/upload", "/video/uploadCover")
                 .addPathPatterns("/video/userLike", "/video/userUnLike")
-                .excludePathPatterns("/user/queryPublisher")
+                // 过滤掉登录页面
+                .excludePathPatterns("/login")
+                // 过滤掉静态资源
+                .excludePathPatterns("/static/**")
                 .excludePathPatterns("/user/query");
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //swagger-bootstrap-ui
+        // swagger-bootstrap-ui
         registry.addResourceHandler("doc.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
