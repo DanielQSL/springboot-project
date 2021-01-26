@@ -9,6 +9,7 @@ import java.util.Objects;
 /**
  * TransmittableThreadLocal工具类
  * 可与线程池进行对象传递
+ * 注意：使用时，需要对线程池进行包装，TtlExecutors.getTtlExecutor(executor)
  *
  * @author qianshuailong
  * @date 2020/10/29
