@@ -1,7 +1,7 @@
 package com.company.project.interceptor;
 
+import com.alibaba.fastjson.JSON;
 import com.company.project.common.ServerResponse;
-import com.company.project.utils.JsonUtil;
 import com.company.project.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 拦截器
@@ -35,19 +35,18 @@ public class MiniInterceptor implements HandlerInterceptor {
      *
      * @param request
      * @param response
-     * @param o
+     * @param handler
      * @return 返回false：请求被拦截，返回
      * 返回true：请求OK，继续执行
      * @throws Exception
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String userId = request.getHeader("userId");
         String userToken = request.getHeader("userToken");
-
         if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(userToken)) {
             String uniqueToken = (String) redisUtil.get(USER_REDIS_SESSION + ":" + userId);
-            if (StringUtils.isEmpty(uniqueToken) && StringUtils.isBlank(uniqueToken)) {
+            if (StringUtils.isBlank(uniqueToken)) {
                 log.info("{}请先登陆", userId);
                 returnErrorResponse(response, ServerResponse.fail(502, "请先登陆"));
                 return false;
@@ -68,34 +67,27 @@ public class MiniInterceptor implements HandlerInterceptor {
     /**
      * 抛出错误信息
      *
-     * @param response
-     * @param result
-     * @throws IOException
-     * @throws UnsupportedEncodingException
+     * @param response HttpServletResponse
+     * @param result   响应结果
+     * @throws IOException IO异常
      */
     public void returnErrorResponse(HttpServletResponse response, ServerResponse result)
-            throws IOException, UnsupportedEncodingException {
-        OutputStream out = null;
-        try {
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("text/json");
-            out = response.getOutputStream();
-            out.write(JsonUtil.obj2String(result).getBytes("utf-8"));
+            throws IOException {
+        try (OutputStream out = response.getOutputStream()) {
+            response.setContentType("application/json;charset=UTF-8");
+            out.write(JSON.toJSONString(result).getBytes(StandardCharsets.UTF_8));
             out.flush();
-        } finally {
-            if (out != null) {
-                out.close();
-            }
         }
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
     }
+
 }
