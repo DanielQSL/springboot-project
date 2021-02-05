@@ -20,17 +20,17 @@ public class PageResult<T> implements Serializable {
     /**
      * 当前页
      */
-    private Long pageNum;
+    private Integer pageNum;
 
     /**
      * 每页的数量
      */
-    private Long pageSize;
+    private Integer pageSize;
 
     /**
      * 总页数
      */
-    private Long totalPage;
+    private Integer totalPage;
 
     /**
      * 总记录数
@@ -47,9 +47,9 @@ public class PageResult<T> implements Serializable {
      */
     public static <T> PageResult<T> convertPageResult(Page<T> page) {
         PageResult<T> pageResult = new PageResult<>();
-        pageResult.setPageNum(page.getCurrent());
-        pageResult.setPageSize(page.getSize());
-        pageResult.setTotalPage(page.getPages());
+        pageResult.setPageNum((int) page.getCurrent());
+        pageResult.setPageSize((int) page.getSize());
+        pageResult.setTotalPage((int) page.getPages());
         pageResult.setTotal(page.getTotal());
         pageResult.setList(page.getRecords());
         return pageResult;
@@ -61,9 +61,9 @@ public class PageResult<T> implements Serializable {
     public static <T> PageResult<T> convertPageResult(List<T> list) {
         PageResult<T> result = new PageResult<T>();
         PageInfo<T> pageInfo = new PageInfo<T>(list);
-        result.setPageNum((long) pageInfo.getPageNum());
-        result.setPageSize((long) pageInfo.getPageSize());
-        result.setTotalPage((long) pageInfo.getPages());
+        result.setPageNum(pageInfo.getPageNum());
+        result.setPageSize(pageInfo.getPageSize());
+        result.setTotalPage(pageInfo.getPages());
         result.setTotal(pageInfo.getTotal());
         result.setList(pageInfo.getList());
         return result;
