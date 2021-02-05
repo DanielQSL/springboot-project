@@ -20,22 +20,22 @@ public class PageResult<T> implements Serializable {
     /**
      * 当前页
      */
-    private long pageNum;
+    private Long pageNum;
 
     /**
      * 每页的数量
      */
-    private long pageSize;
+    private Long pageSize;
 
     /**
      * 总页数
      */
-    private long totalPage;
+    private Long totalPage;
 
     /**
      * 总记录数
      */
-    private long total;
+    private Long total;
 
     /**
      * 结果集
@@ -61,9 +61,9 @@ public class PageResult<T> implements Serializable {
     public static <T> PageResult<T> convertPageResult(List<T> list) {
         PageResult<T> result = new PageResult<T>();
         PageInfo<T> pageInfo = new PageInfo<T>(list);
-        result.setPageNum(pageInfo.getPageNum());
-        result.setPageSize(pageInfo.getPageSize());
-        result.setTotalPage(pageInfo.getPages());
+        result.setPageNum((long) pageInfo.getPageNum());
+        result.setPageSize((long) pageInfo.getPageSize());
+        result.setTotalPage((long) pageInfo.getPages());
         result.setTotal(pageInfo.getTotal());
         result.setList(pageInfo.getList());
         return result;
