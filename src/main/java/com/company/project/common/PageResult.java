@@ -20,7 +20,7 @@ public class PageResult<T> implements Serializable {
     /**
      * 当前页
      */
-    private long currentPage;
+    private long pageNum;
 
     /**
      * 每页的数量
@@ -47,7 +47,7 @@ public class PageResult<T> implements Serializable {
      */
     public static <T> PageResult<T> convertPageResult(Page<T> page) {
         PageResult<T> pageResult = new PageResult<>();
-        pageResult.setCurrentPage(page.getCurrent());
+        pageResult.setPageNum(page.getCurrent());
         pageResult.setPageSize(page.getSize());
         pageResult.setTotalPage(page.getPages());
         pageResult.setTotal(page.getTotal());
@@ -61,7 +61,7 @@ public class PageResult<T> implements Serializable {
     public static <T> PageResult<T> convertPageResult(List<T> list) {
         PageResult<T> result = new PageResult<T>();
         PageInfo<T> pageInfo = new PageInfo<T>(list);
-        result.setCurrentPage(pageInfo.getPageNum());
+        result.setPageNum(pageInfo.getPageNum());
         result.setPageSize(pageInfo.getPageSize());
         result.setTotalPage(pageInfo.getPages());
         result.setTotal(pageInfo.getTotal());
