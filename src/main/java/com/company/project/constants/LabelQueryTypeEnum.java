@@ -18,7 +18,7 @@ public enum LabelQueryTypeEnum {
      */
     CLIENT_CODE(1, "client_code"),
     CLIENT_ID(2, "client_id"),
-    PUID(3, "user_id"),
+    USER_ID(3, "user_id"),
     ;
 
     private final Integer code;
