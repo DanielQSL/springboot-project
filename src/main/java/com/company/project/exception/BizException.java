@@ -30,6 +30,10 @@ public class BizException extends RuntimeException {
         this(commonError.getErrorCode(), commonError.getErrorMsg());
     }
 
+    public BizException(BaseCommonError commonError, String errorMsg) {
+        this(commonError.getErrorCode(), errorMsg);
+    }
+
     public int getCode() {
         return code;
     }
