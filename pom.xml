@@ -16,9 +16,11 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <!--   以下这些在Spring-boot中已经定义，故可以省略     -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <!--   END     -->
 <!--        <spring-boot-1.x>1.5.14.RELEASE</spring-boot-1.x>-->
 <!--        <spring-boot-2.0.x>2.0.8.RELEASE</spring-boot-2.0.x>-->
 <!--        <spring-boot-2.1.x>2.1.10.RELEASE</spring-boot-2.1.x>-->
