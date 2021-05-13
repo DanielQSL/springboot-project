@@ -19,6 +19,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+<!--        <spring-boot-1.x>1.5.14.RELEASE</spring-boot-1.x>-->
+<!--        <spring-boot-2.1.x>2.1.10.RELEASE</spring-boot-2.1.x>-->
 
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
