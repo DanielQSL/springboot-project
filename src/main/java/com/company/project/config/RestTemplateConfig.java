@@ -66,8 +66,6 @@ public class RestTemplateConfig {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
 
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        //缓冲请求数据，默认为true。通过POST或者PUT大量发送数据时，建议将此更改为false，以免耗尽内存
-        requestFactory.setBufferRequestBody(false);
         // 添加内容转换器
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
         restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
