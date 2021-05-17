@@ -69,7 +69,7 @@ public class RestTemplateConfig {
         // 添加内容转换器
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
         restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
-        restTemplate.getMessageConverters().add(new MappingJackson2XmlHttpMessageConverter());
+//        restTemplate.getMessageConverters().add(new MappingJackson2XmlHttpMessageConverter());
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         restTemplate.getMessageConverters().add(new FastJsonHttpMessageConverter());
         return restTemplate;
