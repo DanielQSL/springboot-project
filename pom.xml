@@ -200,6 +200,12 @@
             <artifactId>okhttp</artifactId>
             <version>4.9.0</version>
         </dependency>
+        <!-- 计算对象大小 -->
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>java-sizeof</artifactId>
+            <version>0.0.5</version>
+        </dependency>
     </dependencies>
 
     <build>
