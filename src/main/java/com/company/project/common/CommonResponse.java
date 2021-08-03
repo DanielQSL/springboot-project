@@ -1,29 +1,33 @@
 package com.company.project.common;
 
 import com.company.project.enums.ResponseCodeEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
 /**
- * 服务端返回的结果集
+ * 通用返回
  *
  * @author DanielQSL
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Getter
-@Setter
 public class CommonResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 错误码
+     */
     private Integer code;
 
+    /**
+     * 错误描述
+     */
     private String msg;
 
+    /**
+     * 返回数据
+     */
     private T data;
 
     /**
@@ -51,11 +55,6 @@ public class CommonResponse<T> implements Serializable {
     private CommonResponse(int code, String msg) {
         this.code = code;
         this.msg = msg;
-    }
-
-    @JsonIgnore
-    public boolean isSuccess() {
-        return ResponseCodeEnum.SUCCESS.getCode().equals(this.code);
     }
 
     public static <T> CommonResponse<T> success() {
@@ -88,6 +87,39 @@ public class CommonResponse<T> implements Serializable {
 
     public static <T> CommonResponse<T> fail(int errorCode, String errorMessage) {
         return new CommonResponse<>(errorCode, errorMessage);
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "CommonResponse{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 
 }
