@@ -1,6 +1,6 @@
 package com.company.project.exception;
 
-import com.company.project.common.ServerResponse;
+import com.company.project.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -34,11 +34,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ServerResponse bindExceptionHandler(BindException ex) {
+    public CommonResponse bindExceptionHandler(BindException ex) {
         String errorMsg = ex.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(";", "", ""));
-        return ServerResponse.fail(errorMsg);
+        return CommonResponse.fail(errorMsg);
     }
 
     /**
@@ -49,11 +49,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ServerResponse constraintViolationExceptionHandler(ConstraintViolationException ex) {
+    public CommonResponse constraintViolationExceptionHandler(ConstraintViolationException ex) {
         String errorMsg = ex.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(";", "", ""));
-        return ServerResponse.fail(errorMsg);
+        return CommonResponse.fail(errorMsg);
     }
 
     /**
@@ -64,11 +64,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ServerResponse methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
+    public CommonResponse methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
         String errorMsg = ex.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(";", "", ""));
-        return ServerResponse.fail(errorMsg);
+        return CommonResponse.fail(errorMsg);
     }
 
     /**
@@ -80,9 +80,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = BizException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ServerResponse bizExceptionHandler(HttpServletRequest request, final BizException ex) {
+    public CommonResponse bizExceptionHandler(HttpServletRequest request, final BizException ex) {
         log.warn("{} 业务异常", request.getRequestURI(), ex);
-        return ServerResponse.fail(ex.getCode(), ex.getMessage());
+        return CommonResponse.fail(ex.getCode(), ex.getMessage());
     }
 
     /**
@@ -94,9 +94,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ServerResponse otherExceptionHandler(HttpServletRequest request, final Exception ex) {
+    public CommonResponse otherExceptionHandler(HttpServletRequest request, final Exception ex) {
         log.error("{} 系统异常", request.getRequestURI(), ex);
-        return ServerResponse.fail(ex.getMessage());
+        return CommonResponse.fail(ex.getMessage());
     }
 
 }

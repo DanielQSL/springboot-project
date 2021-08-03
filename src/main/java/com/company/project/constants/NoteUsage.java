@@ -1,5 +1,7 @@
 package com.company.project.constants;
 
+import com.company.project.enums.LabelQueryTypeEnum;
+
 /**
  * 注释使用
  * <p>

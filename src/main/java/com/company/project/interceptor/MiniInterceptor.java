@@ -1,7 +1,7 @@
 package com.company.project.interceptor;
 
 import com.alibaba.fastjson.JSON;
-import com.company.project.common.ServerResponse;
+import com.company.project.common.CommonResponse;
 import com.company.project.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -48,18 +48,18 @@ public class MiniInterceptor implements HandlerInterceptor {
             String uniqueToken = (String) redisUtil.get(USER_REDIS_SESSION + ":" + userId);
             if (StringUtils.isBlank(uniqueToken)) {
                 log.info("{}请先登陆", userId);
-                returnErrorResponse(response, ServerResponse.fail(502, "请先登陆"));
+                returnErrorResponse(response, CommonResponse.fail(502, "请先登陆"));
                 return false;
             } else {
                 if (!uniqueToken.equals(userToken)) {
                     log.info("{}账号在别的设备登陆", userId);
-                    returnErrorResponse(response, ServerResponse.fail(502, "账号被挤出"));
+                    returnErrorResponse(response, CommonResponse.fail(502, "账号被挤出"));
                 }
             }
             return true;
         } else {
             log.info("{}请先登陆", userId);
-            returnErrorResponse(response, ServerResponse.fail(502, "请先登陆"));
+            returnErrorResponse(response, CommonResponse.fail(502, "请先登陆"));
             return false;
         }
     }
@@ -71,7 +71,7 @@ public class MiniInterceptor implements HandlerInterceptor {
      * @param result   响应结果
      * @throws IOException IO异常
      */
-    public void returnErrorResponse(HttpServletResponse response, ServerResponse result)
+    public void returnErrorResponse(HttpServletResponse response, CommonResponse result)
             throws IOException {
         try (OutputStream out = response.getOutputStream()) {
             response.setContentType("application/json;charset=UTF-8");

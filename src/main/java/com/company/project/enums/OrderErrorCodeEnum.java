@@ -1,4 +1,4 @@
-package com.company.project.constants;
+package com.company.project.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -21,12 +21,4 @@ public interface BaseCommonError {
      */
     String getErrorMsg();
 
-    /**
-     * 设置自定义错误描述
-     *
-     * @param errorMsg 错误描述
-     * @return 通用错误接口
-     */
-    BaseCommonError setErrorMsg(String errorMsg);
-
 }

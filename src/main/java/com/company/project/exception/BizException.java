@@ -9,7 +9,7 @@ import com.company.project.common.BaseCommonError;
  */
 public class BizException extends RuntimeException {
 
-    private static final long serialVersionUID = 4564124491192825748L;
+    private static final long serialVersionUID = 1L;
 
     private Integer code;
 
@@ -41,4 +41,5 @@ public class BizException extends RuntimeException {
     public void setCode(Integer code) {
         this.code = code;
     }
+
 }
