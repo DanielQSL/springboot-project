@@ -1,18 +1,19 @@
 package com.company.project.enums;
 
+import com.company.project.common.BaseCommonError;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * 订单错误码
  * <p>
- * 错误码区间 [1-008-000-000 ~ 1-008-000-000]
+ * 错误码区间 [108_000-000 ~ 109-000-000)
  *
  * @author DanielQSL
  */
 @Getter
 @AllArgsConstructor
-public enum OrderErrorCodeEnum {
+public enum OrderErrorCodeEnum implements BaseCommonError {
 
     // ========== 订单 ==========
     ORDER_NOT_EXISTENT(1008000000, "获取订单不存在!"),
@@ -52,6 +53,16 @@ public enum OrderErrorCodeEnum {
     ;
 
     private final Integer code;
-    private final String message;
+    private final String msg;
+
+    @Override
+    public int getErrorCode() {
+        return this.code;
+    }
+
+    @Override
+    public String getErrorMsg() {
+        return this.msg;
+    }
 
 }

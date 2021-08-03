@@ -27,9 +27,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ServiceErrorCodeEnum implements BaseCommonError {
 
-    // ========== user 错误码区间 [101-000-000 ~ 102-000-000) ==========
-
-    USER_MODEL_QUERY_EMPTY(101_002_001, "未查询到用户"),
+    // ========== user 错误码区间 [101_000_000 ~ 102_000_000) ==========
+    USER_QUERY_EMPTY(101_002_001, "未查询到用户"),
 
     ;
 
