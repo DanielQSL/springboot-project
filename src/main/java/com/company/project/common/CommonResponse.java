@@ -30,31 +30,19 @@ public class CommonResponse<T> implements Serializable {
      */
     private T data;
 
-    /**
-     * 空参构造函数
-     * 注：Jackson反序列化需要无参构造函数
-     */
     public CommonResponse() {
+
     }
 
-    private CommonResponse(int code) {
+    private CommonResponse(int code, String msg) {
         this.code = code;
-    }
-
-    private CommonResponse(int code, T data) {
-        this.code = code;
-        this.data = data;
+        this.msg = msg;
     }
 
     private CommonResponse(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
-    }
-
-    private CommonResponse(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
     }
 
     public static <T> CommonResponse<T> success() {
@@ -65,12 +53,12 @@ public class CommonResponse<T> implements Serializable {
         return new CommonResponse<>(ResponseCodeEnum.SUCCESS.getCode(), ResponseCodeEnum.SUCCESS.getMsg(), data);
     }
 
-    public static <T> CommonResponse<T> successMsg(String msg) {
-        return new CommonResponse<>(ResponseCodeEnum.SUCCESS.getCode(), msg);
+    public static <T> CommonResponse<T> successMsg(String message) {
+        return new CommonResponse<>(ResponseCodeEnum.SUCCESS.getCode(), message);
     }
 
-    public static <T> CommonResponse<T> success(String msg, T data) {
-        return new CommonResponse<>(ResponseCodeEnum.SUCCESS.getCode(), msg, data);
+    public static <T> CommonResponse<T> success(String message, T data) {
+        return new CommonResponse<>(ResponseCodeEnum.SUCCESS.getCode(), message, data);
     }
 
     public static <T> CommonResponse<T> fail() {
@@ -81,12 +69,16 @@ public class CommonResponse<T> implements Serializable {
         return new CommonResponse<>(ResponseCodeEnum.ERROR.getCode(), errorMessage);
     }
 
+    public static <T> CommonResponse<T> fail(int errorCode, String errorMessage) {
+        return new CommonResponse<>(errorCode, errorMessage);
+    }
+
     public static <T> CommonResponse<T> fail(BaseCommonError commonError) {
         return new CommonResponse<>(commonError.getErrorCode(), commonError.getErrorMsg());
     }
 
-    public static <T> CommonResponse<T> fail(int errorCode, String errorMessage) {
-        return new CommonResponse<>(errorCode, errorMessage);
+    public static <T> CommonResponse<T> fail(BaseCommonError commonError, String errorMessage) {
+        return new CommonResponse<>(commonError.getErrorCode(), errorMessage);
     }
 
     public Integer getCode() {

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 
 /**
- * 通用返回 V2版本
+ * 通用返回 V2详细版本
  *
  * @author DanielQSL
  */
@@ -37,6 +37,7 @@ public class CommonResponseV2<T> implements Serializable {
      * 注：Jackson反序列化需要无参构造函数
      */
     public CommonResponseV2() {
+
     }
 
     private CommonResponseV2(int code) {
@@ -48,15 +49,15 @@ public class CommonResponseV2<T> implements Serializable {
         this.data = data;
     }
 
+    private CommonResponseV2(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     private CommonResponseV2(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
-    }
-
-    private CommonResponseV2(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
     }
 
     @JsonIgnore
@@ -72,12 +73,12 @@ public class CommonResponseV2<T> implements Serializable {
         return new CommonResponseV2<>(ResponseCodeEnum.SUCCESS.getCode(), ResponseCodeEnum.SUCCESS.getMsg(), data);
     }
 
-    public static <T> CommonResponseV2<T> successMsg(String msg) {
-        return new CommonResponseV2<>(ResponseCodeEnum.SUCCESS.getCode(), msg);
+    public static <T> CommonResponseV2<T> successMsg(String message) {
+        return new CommonResponseV2<>(ResponseCodeEnum.SUCCESS.getCode(), message);
     }
 
-    public static <T> CommonResponseV2<T> success(String msg, T data) {
-        return new CommonResponseV2<>(ResponseCodeEnum.SUCCESS.getCode(), msg, data);
+    public static <T> CommonResponseV2<T> success(String message, T data) {
+        return new CommonResponseV2<>(ResponseCodeEnum.SUCCESS.getCode(), message, data);
     }
 
     public static <T> CommonResponseV2<T> fail() {
@@ -88,12 +89,16 @@ public class CommonResponseV2<T> implements Serializable {
         return new CommonResponseV2<>(ResponseCodeEnum.ERROR.getCode(), errorMessage);
     }
 
+    public static <T> CommonResponseV2<T> fail(int errorCode, String errorMessage) {
+        return new CommonResponseV2<>(errorCode, errorMessage);
+    }
+
     public static <T> CommonResponseV2<T> fail(BaseCommonError commonError) {
         return new CommonResponseV2<>(commonError.getErrorCode(), commonError.getErrorMsg());
     }
 
-    public static <T> CommonResponseV2<T> fail(int errorCode, String errorMessage) {
-        return new CommonResponseV2<>(errorCode, errorMessage);
+    public static <T> CommonResponseV2<T> fail(BaseCommonError commonError, String errorMessage) {
+        return new CommonResponseV2<>(commonError.getErrorCode(), errorMessage);
     }
 
     public Integer getCode() {
