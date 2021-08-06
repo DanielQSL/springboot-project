@@ -40,12 +40,12 @@ public class JsonUtil {
         OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.ALWAYS);
         // 取消默认转换timestamps形式
         OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        // 忽略空Bean转json的错误
-        OBJECT_MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         // 所有的日期格式都统一为以下的样式，即yyyy-MM-dd HH:mm:ss
         OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DATETIME_STANDARD_FORMAT));
         // 忽略在json字符串中存在，但是在java对象中不存在对应属性的情况。防止错误
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        // 忽略空Bean转json的错误
+        OBJECT_MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         // 设置可以解析带注释的JSON串
         OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
         // 反序列化可以解析JSON串里包含了数字类型的属性值为NaN
@@ -80,7 +80,7 @@ public class JsonUtil {
         try {
             return obj instanceof String ? (String) obj : OBJECT_MAPPER.writeValueAsString(obj);
         } catch (Exception e) {
-            LOGGER.error("Parse Object to String error.", e);
+            LOGGER.error("Parse Object to String error", e);
             return null;
         }
     }
@@ -98,7 +98,7 @@ public class JsonUtil {
         try {
             return obj instanceof String ? (String) obj : OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (Exception e) {
-            LOGGER.error("Parse Object to Pretty String error.", e);
+            LOGGER.error("Parse Object to Pretty String error", e);
             return null;
         }
     }
