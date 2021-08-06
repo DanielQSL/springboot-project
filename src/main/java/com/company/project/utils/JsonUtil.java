@@ -67,6 +67,9 @@ public class JsonUtil {
         return simpleModule;
     }
 
+    private JsonUtil() {
+    }
+
     /**
      * 对象转为Json格式字符串
      *
