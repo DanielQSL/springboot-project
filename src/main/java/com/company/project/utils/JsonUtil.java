@@ -114,7 +114,7 @@ public class JsonUtil {
      * @return 自定义对象
      */
     @SuppressWarnings("unchecked")
-    public static <T> T toObject(String str, Class<T> clazz) {
+    public static <T> T parseObject(String str, Class<T> clazz) {
         if (StringUtils.isEmpty(str) || clazz == null) {
             return null;
         }
@@ -133,8 +133,8 @@ public class JsonUtil {
      * @param elementClasses 元素类型
      * @return ArrayList对象
      */
-    public static <T> T toObjectList(String str, Class<?>... elementClasses) {
-        return toObjectCollection(str, ArrayList.class, elementClasses);
+    public static <T> T parseObjectList(String str, Class<?>... elementClasses) {
+        return parseObjectCollection(str, ArrayList.class, elementClasses);
     }
 
     /**
@@ -145,7 +145,7 @@ public class JsonUtil {
      * @param elementClasses  元素类型
      * @return 集合对象
      */
-    public static <T> T toObjectCollection(String str, Class<?> collectionClass, Class<?>... elementClasses) {
+    public static <T> T parseObjectCollection(String str, Class<?> collectionClass, Class<?>... elementClasses) {
         // 获取泛型的 Collection Type
         JavaType javaType = OBJECT_MAPPER.getTypeFactory().constructParametricType(collectionClass, elementClasses);
         try {
@@ -164,7 +164,7 @@ public class JsonUtil {
      * @return 集合对象
      */
     @SuppressWarnings("unchecked")
-    public static <T> T toObjectCollection(String str, TypeReference<T> typeReference) {
+    public static <T> T parseObjectCollection(String str, TypeReference<T> typeReference) {
         if (StringUtils.isEmpty(str) || typeReference == null) {
             return null;
         }
