@@ -23,6 +23,8 @@ public class HealthCheckController {
     /**
      * 健康检查接口
      * （数据预热完成后再对外提供接口）
+     * <p>
+     * ResponseEntity可以理解为 @ResponseBody + @ResponseStatus 的组合
      *
      * @return 响应
      */
