@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <!--   END     -->
+        <!--   END    -->
 <!--        <spring-boot-1.x>1.5.14.RELEASE</spring-boot-1.x>-->
 <!--        <spring-boot-2.0.x>2.0.8.RELEASE</spring-boot-2.0.x>-->
 <!--        <spring-boot-2.1.x>2.1.10.RELEASE</spring-boot-2.1.x>-->
@@ -222,6 +222,36 @@
             <version>0.0.5</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <!-- 公司私服 -->
+        <repository>
+            <id>company_nexus</id>
+            <name>company_nexus</name>
+            <url>http://maven.company.com/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+    </repositories>
+
+    <!-- 发布配置 -->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://maven.company.com/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://maven.company.com/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
