@@ -1,6 +1,7 @@
 package com.company.project.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 
 /**
  * Jackson JSON工具类
+ * <p>
+ * Jackson 配置官方文档: https://github.com/FasterXML/jackson-databind/wiki/JacksonFeatures
  *
  * @author DanielQSL
  */
@@ -36,20 +39,27 @@ public class JsonUtil {
     static {
         // 模组（Long转String）
         OBJECT_MAPPER.registerModule(longToStringModule());
-        // 对象的所有字段全部列入
-        OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.ALWAYS);
-        // 取消默认转换timestamps形式
-        OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         // 所有的日期格式都统一为以下的样式，即yyyy-MM-dd HH:mm:ss
         OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DATETIME_STANDARD_FORMAT));
-        // 忽略在json字符串中存在，但是在java对象中不存在对应属性的情况。防止错误
-        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 忽略空Bean转json的错误
+        // 对象的所有字段全部列入。NON_NULL：不返回 null 值字段
+        OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+        // 允许序列化空的POJO类(否则会抛出异常)
         OBJECT_MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        // 设置可以解析带注释的JSON串
-        OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+        // 取消java.util.Date, Calendar默认转换timestamps形式
+        OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        // 在遇到未知属性的时候不抛出异常。忽略在json字符串中存在，但是在java对象中不存在对应属性的情况。
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        // 强制 JSON 空字符串("")转换为 null 对象值:
+        OBJECT_MAPPER.disable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        // 在 JSON 中允许 C/C++ 样式的注释(非标准，默认禁用)
+        OBJECT_MAPPER.enable(JsonParser.Feature.ALLOW_COMMENTS);
+        // 允许单引号(非标准)
+        OBJECT_MAPPER.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
         // 反序列化可以解析JSON串里包含了数字类型的属性值为NaN
-        OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_NON_NUMERIC_NUMBERS, true);
+        OBJECT_MAPPER.enable(JsonParser.Feature.ALLOW_NON_NUMERIC_NUMBERS);
+        // 强制转义非 ASCII 字符
+        OBJECT_MAPPER.enable(JsonGenerator.Feature.ESCAPE_NON_ASCII);
     }
 
     /**
