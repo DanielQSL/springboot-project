@@ -1,6 +1,7 @@
 package com.company.project.interceptor;
 
 import com.company.project.common.CommonResponse;
+import com.company.project.context.UserContextHolder;
 import com.company.project.dto.UserDTO;
 import com.company.project.enums.ResponseCodeEnum;
 import com.company.project.utils.JsonUtil;
@@ -55,7 +56,7 @@ public class UserSessionInterceptor implements HandlerInterceptor {
             return false;
         }
         // 设置UserThreadLocal
-        UserThreadLocalContext.setUserThreadLocal(userInfo);
+        UserContextHolder.setCurrentUser(userInfo);
         return true;
     }
 
@@ -93,7 +94,7 @@ public class UserSessionInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        UserThreadLocalContext.remove();
+        UserContextHolder.remove();
     }
 
 }
