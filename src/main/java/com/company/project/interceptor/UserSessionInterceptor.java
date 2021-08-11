@@ -46,13 +46,13 @@ public class UserSessionInterceptor implements HandlerInterceptor {
         String userToken = this.getToken(request);
 
         if (StringUtils.isBlank(userToken)) {
-            this.returnErrorResponse(response, CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED));
+            this.generateResponse(response, CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED));
             return false;
         }
         // 缓存中获取用户信息
         UserDTO userInfo = (UserDTO) redisTemplate.opsForValue().get(USER_INFO_CACHE_PREFIX + userToken);
         if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {
-            this.returnErrorResponse(response, CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED));
+            this.generateResponse(response, CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED));
             return false;
         }
         // 设置UserThreadLocal
@@ -61,13 +61,13 @@ public class UserSessionInterceptor implements HandlerInterceptor {
     }
 
     /**
-     * 抛出错误信息
+     * 生成响应结果
      *
      * @param response HttpServletResponse
      * @param result   响应结果
      * @throws IOException IO异常
      */
-    public void returnErrorResponse(HttpServletResponse response, CommonResponse result)
+    public void generateResponse(HttpServletResponse response, CommonResponse result)
             throws IOException {
         try (OutputStream out = response.getOutputStream()) {
 //            response.setHeader("content-type", "application/json;charset=UTF-8");
