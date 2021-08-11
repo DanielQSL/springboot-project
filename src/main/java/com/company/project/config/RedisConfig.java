@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Redis配置
@@ -24,8 +24,8 @@ public class RedisConfig {
      * RedisTemplate配置
      * 对key和value进行序列化
      *
-     * @param redisConnectionFactory
-     * @return
+     * @param redisConnectionFactory redis连接工程
+     * @return RedisTemplate
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -41,8 +41,10 @@ public class RedisConfig {
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         // 指定序列化输入的类型，类必须是非final修饰的，final修饰的类，比如String,Integer等会跑出异常
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        // 反序列化时,遇到未知属性是否抛出异常
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        // 在遇到未知属性的时候不抛出异常
+        om.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        // 允许序列化空的POJO类(否则会抛出异常)
+        om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         jackson2JsonRedisSerializer.setObjectMapper(om);
 
         // key采用String的序列化方式
