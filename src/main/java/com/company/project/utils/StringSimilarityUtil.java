@@ -11,7 +11,7 @@ import java.util.Map;
  * 文本相似度计算
  * 根据余弦定理计算文本相似度
  *
- * @author danielqsl
+ * @author DanielQSL
  */
 @Slf4j
 public class StringSimilarityUtil {

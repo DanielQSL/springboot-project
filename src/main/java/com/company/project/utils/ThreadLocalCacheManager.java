@@ -11,8 +11,7 @@ import java.util.Objects;
  * 可与线程池进行对象传递
  * 注意：使用时，需要对线程池进行包装，TtlExecutors.getTtlExecutor(executor)
  *
- * @author qianshuailong
- * @date 2020/10/29
+ * @author DanielQSL
  */
 public class ThreadLocalCacheManager {
 
