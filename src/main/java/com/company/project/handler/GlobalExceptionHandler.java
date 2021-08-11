@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  *
  * @author DanielQSL
  */
+@SuppressWarnings({"rawtypes"})
 @Slf4j
 @RestControllerAdvice(annotations = {RestController.class, Controller.class})
 public class GlobalExceptionHandler {
