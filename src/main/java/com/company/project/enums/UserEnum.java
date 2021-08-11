@@ -9,8 +9,7 @@ import java.util.Map;
 /**
  * 用户枚举（数值转换枚举）
  *
- * @author qianshuailong
- * @date 2021/4/5
+ * @author DanielQSL
  */
 public class UserEnum {
 

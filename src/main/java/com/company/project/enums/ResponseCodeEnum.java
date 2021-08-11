@@ -1,8 +1,6 @@
 package com.company.project.enums;
 
 import com.company.project.common.BaseCommonError;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * 全局错误码
@@ -14,8 +12,6 @@ import lombok.Getter;
  *
  * @author DanielQSL
  */
-@Getter
-@AllArgsConstructor
 public enum ResponseCodeEnum implements BaseCommonError {
     /**
      * 响应码
@@ -39,6 +35,19 @@ public enum ResponseCodeEnum implements BaseCommonError {
 
     private final Integer code;
     private final String msg;
+
+    ResponseCodeEnum(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
 
     @Override
     public int getErrorCode() {

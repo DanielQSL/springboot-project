@@ -10,12 +10,12 @@ import lombok.Getter;
  * 如此在有大量的状态转移的场景中（固定的审批场景，支付场景），
  * 当前状态调用nextStatus()方法获取下一个状态。这种写法可以使得代码更加简洁干净，更加便于维护。
  *
- * @author qianshuailong
- * @date 2021/4/5
+ * @author DanielQSL
  */
 @Getter
 @AllArgsConstructor
 public enum ApprovalStatusEnum {
+
     // 审批状态
     START(1, "开始审批") {
         @Override

@@ -1,8 +1,6 @@
 package com.company.project.enums;
 
 import com.company.project.common.BaseCommonError;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * 业务异常错误码
@@ -23,8 +21,6 @@ import lombok.Getter;
  *
  * @author DanielQSL
  */
-@Getter
-@AllArgsConstructor
 public enum ServiceErrorCodeEnum implements BaseCommonError {
 
     // ========== user 错误码区间 [101_00_0000 ~ 102_00_0000) ==========
@@ -34,6 +30,19 @@ public enum ServiceErrorCodeEnum implements BaseCommonError {
 
     private final Integer code;
     private final String msg;
+
+    ServiceErrorCodeEnum(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
 
     @Override
     public int getErrorCode() {
