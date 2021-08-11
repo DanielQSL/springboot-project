@@ -14,7 +14,7 @@ public class UserContextHolder {
     /**
      * 线程变量，存放user实体类信息
      */
-    private static ThreadLocal<UserDTO> userInfoHolder = new ThreadLocal<>();
+    private static final ThreadLocal<UserDTO> userInfoHolder = new ThreadLocal<>();
 
     /**
      * 从当前线程变量中获取用户信息
