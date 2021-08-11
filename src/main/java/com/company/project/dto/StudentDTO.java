@@ -3,8 +3,9 @@ package com.company.project.dto;
 import lombok.Data;
 
 /**
- * @author qianshuailong
- * @date 2020/10/19
+ * 学生 DTO对象
+ *
+ * @author DanielQSL
  */
 @Data
 public class StudentDTO {
