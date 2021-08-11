@@ -10,14 +10,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import java.text.SimpleDateFormat;
+
 /**
  * ObjectMapper配置类
  *
- * @author qianshuailong
- * @date 2021/1/7
+ * @author DanielQSL
  */
 @Configuration
 public class ObjectMapperConfig {
+
+    /**
+     * 日期格式化
+     */
+    private static final String DATETIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 定义ObjectMapper配置
@@ -29,18 +35,25 @@ public class ObjectMapperConfig {
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper om = new ObjectMapper();
-        // 忽略json字符串中不识别的字段
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         // 指定要序列化的域，field,get和set,以及修饰符范围，ANY是都有包括private和public
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        // 关闭空对象不让序列化功能
-        om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        // 设置可以解析带注释的JSON串
-        om.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+        // 所有的日期格式都统一为以下的样式，即yyyy-MM-dd HH:mm:ss
+        om.setDateFormat(new SimpleDateFormat(DATETIME_STANDARD_FORMAT));
+        // 在遇到未知属性的时候不抛出异常
+        om.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        // 允许序列化空的POJO类(否则会抛出异常)
+        om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        // 取消java.util.Date, Calendar默认转换timestamps形式
+        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        // 在 JSON 中允许 C/C++ 样式的注释(非标准，默认禁用)
+        om.enable(JsonParser.Feature.ALLOW_COMMENTS);
         // 解析以"0"为开头的数字
-        om.configure(JsonParser.Feature.ALLOW_NUMERIC_LEADING_ZEROS, true);
+        om.enable(JsonParser.Feature.ALLOW_NUMERIC_LEADING_ZEROS);
+        // 允许单引号(非标准)
+        om.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
         // 反序列化可以解析JSON串里包含了数字类型的属性值为NaN
-        om.configure(JsonParser.Feature.ALLOW_NON_NUMERIC_NUMBERS, true);
+        om.enable(JsonParser.Feature.ALLOW_NON_NUMERIC_NUMBERS);
         return om;
     }
 
