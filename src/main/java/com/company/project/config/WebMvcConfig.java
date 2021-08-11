@@ -1,6 +1,6 @@
 package com.company.project.config;
 
-import com.company.project.interceptor.MiniInterceptor;
+import com.company.project.interceptor.UserSessionInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
-    private MiniInterceptor miniInterceptor;
+    private UserSessionInterceptor userSessionInterceptor;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -30,19 +30,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(miniInterceptor)
-                .addPathPatterns("/**")
-                .addPathPatterns("/user/**")
-                .addPathPatterns("/video/userLike", "/video/userUnLike")
-                // 过滤掉登录页面
-                .excludePathPatterns("/login")
-                // 过滤掉静态资源
-                .excludePathPatterns("/static/**")
-                .excludePathPatterns("/user/query");
-    }
-
-    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // swagger-bootstrap-ui
         registry.addResourceHandler("doc.html")
@@ -51,6 +38,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(userSessionInterceptor)
+                .addPathPatterns("/**")
+                .addPathPatterns("/user/**")
+                .addPathPatterns("/video/userLike", "/video/userUnLike")
+                // 过滤掉登录页面
+                .excludePathPatterns("/login")
+                // 过滤掉静态资源
+                .excludePathPatterns("/static/**")
+                .excludePathPatterns("/user/query");
     }
 
 }
