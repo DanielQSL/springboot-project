@@ -1,7 +1,5 @@
 package com.company.project.context;
 
-import com.company.project.dto.UserDTO;
-
 import java.util.Objects;
 
 /**
@@ -14,14 +12,14 @@ public class UserContextHolder {
     /**
      * 线程变量，存放user实体类信息
      */
-    private static final ThreadLocal<UserDTO> userInfoHolder = new ThreadLocal<>();
+    private static final ThreadLocal<UserContext> userInfoHolder = new InheritableThreadLocal<>();
 
     /**
      * 从当前线程变量中获取用户信息
      *
      * @return 用户信息
      */
-    public static UserDTO getCurrentUser() {
+    public static UserContext getCurrentUser() {
         return userInfoHolder.get();
     }
 
@@ -30,7 +28,7 @@ public class UserContextHolder {
      *
      * @param user 用户信息
      */
-    public static void setCurrentUser(UserDTO user) {
+    public static void setCurrentUser(UserContext user) {
         userInfoHolder.set(user);
     }
 
@@ -42,15 +40,29 @@ public class UserContextHolder {
     }
 
     /**
-     * 获取当前登录用户的ID
+     * 获取当前用户的ID
      * 未登录返回null
      *
      * @return 用户ID
      */
-    public static Long getLoginUserId() {
-        UserDTO user = userInfoHolder.get();
-        if (Objects.nonNull(user) && Objects.nonNull(user.getId())) {
+    public static Long getUserId() {
+        UserContext user = getCurrentUser();
+        if (Objects.nonNull(user)) {
             return user.getId();
+        }
+        return null;
+    }
+
+    /**
+     * 获取当前用户的用户名
+     * 未登录返回null
+     *
+     * @return 用户名
+     */
+    public static String getUsername() {
+        UserContext user = getCurrentUser();
+        if (Objects.nonNull(user)) {
+            return user.getUsername();
         }
         return null;
     }

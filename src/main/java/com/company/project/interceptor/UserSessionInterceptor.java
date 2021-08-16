@@ -2,7 +2,7 @@ package com.company.project.interceptor;
 
 import com.company.project.common.CommonResponse;
 import com.company.project.context.UserContextHolder;
-import com.company.project.dto.UserDTO;
+import com.company.project.context.UserContext;
 import com.company.project.enums.ResponseCodeEnum;
 import com.company.project.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class UserSessionInterceptor implements HandlerInterceptor {
             return false;
         }
         // 缓存中获取用户信息
-        UserDTO userInfo = (UserDTO) redisTemplate.opsForValue().get(USER_INFO_CACHE_PREFIX + userToken);
+        UserContext userInfo = (UserContext) redisTemplate.opsForValue().get(USER_INFO_CACHE_PREFIX + userToken);
         if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {
             this.generateResponse(response, CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED));
             return false;

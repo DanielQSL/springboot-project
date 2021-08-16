@@ -1,8 +1,8 @@
-package com.company.project.handler;
+package com.company.project.exception.handler;
 
 import com.company.project.common.CommonResponse;
 import com.company.project.enums.ResponseCodeEnum;
-import com.company.project.exception.BizException;
+import com.company.project.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -82,8 +82,8 @@ public class GlobalExceptionHandler {
      * @return 响应结果
      */
     @ResponseStatus(HttpStatus.OK)
-    @ExceptionHandler(value = BizException.class)
-    public CommonResponse bizExceptionHandler(HttpServletRequest request, final BizException ex) {
+    @ExceptionHandler(value = BusinessException.class)
+    public CommonResponse bizExceptionHandler(HttpServletRequest request, final BusinessException ex) {
         log.warn("{} 业务异常", request.getRequestURI(), ex);
         return CommonResponse.fail(ex.getCode(), ex.getMessage());
     }

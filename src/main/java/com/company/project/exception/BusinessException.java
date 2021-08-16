@@ -7,30 +7,30 @@ import com.company.project.common.BaseCommonError;
  *
  * @author DanielQSL
  */
-public class BizException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
     private Integer code;
 
-    public BizException() {
+    public BusinessException() {
         super();
     }
 
-    public BizException(String message) {
+    public BusinessException(String message) {
         super(message);
     }
 
-    public BizException(Integer code, String message) {
+    public BusinessException(Integer code, String message) {
         super(message);
         this.setCode(code);
     }
 
-    public BizException(BaseCommonError commonError) {
+    public BusinessException(BaseCommonError commonError) {
         this(commonError.getErrorCode(), commonError.getErrorMsg());
     }
 
-    public BizException(BaseCommonError commonError, String errorMsg) {
+    public BusinessException(BaseCommonError commonError, String errorMsg) {
         this(commonError.getErrorCode(), errorMsg);
     }
 

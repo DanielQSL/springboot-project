@@ -1,7 +1,7 @@
 package com.company.project.common;
 
 import com.company.project.enums.ResponseCodeEnum;
-import com.company.project.exception.BizException;
+import com.company.project.exception.BusinessException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -137,13 +137,13 @@ public class CommonResponseV2<T> implements Serializable {
     // ========= 和 Exception 异常体系集成 =========
 
     /**
-     * 判断是否有异常。如果有，则抛出 {@link BizException} 异常
+     * 判断是否有异常。如果有，则抛出 {@link BusinessException} 异常
      */
     public void checkError() throws Exception {
         if (isSuccess()) {
             return;
         }
-        throw new BizException(code, msg);
+        throw new BusinessException(code, msg);
     }
 
 }
