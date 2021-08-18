@@ -1,12 +1,13 @@
 package com.company.project.interceptor;
 
 import com.company.project.common.CommonResponse;
-import com.company.project.context.UserContextHolder;
 import com.company.project.context.UserContext;
+import com.company.project.context.UserContextHolder;
 import com.company.project.enums.ResponseCodeEnum;
 import com.company.project.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * 用户Session 拦截器
@@ -32,6 +34,8 @@ public class UserSessionInterceptor implements HandlerInterceptor {
     private static final String HEADER_USER_TOKEN = "user-token";
 
     private static final String USER_INFO_CACHE_PREFIX = "user:info:";
+
+    private static final String HEADER_TRACE_ID = "trace-id";
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -58,6 +62,22 @@ public class UserSessionInterceptor implements HandlerInterceptor {
         // 设置UserThreadLocal
         UserContextHolder.setCurrentUser(userInfo);
         return true;
+    }
+
+    /**
+     * 获取请求唯一标识
+     *
+     * @param request 请求
+     * @return 唯一标识
+     */
+    private String getTraceId(HttpServletRequest request) {
+        String traceId = request.getHeader(HEADER_TRACE_ID);
+        if (traceId == null) {
+            traceId = UUID.randomUUID().toString().replace("-", "");
+        }
+        // 方便日志调用链路的跟踪
+        MDC.put("trace_id", traceId);
+        return traceId;
     }
 
     /**

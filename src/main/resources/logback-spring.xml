@@ -4,6 +4,7 @@
     <springProperty scope="context" name="LOG_PATH" source="logging.path"/>
 
     <property name="LOG_HOME" value="${LOG_PATH}/${APPLICATION_NAME}"/>
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80} - [%X{trace_id}] %msg%n"/>
     <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80} - %msg%n"/>
     <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %boldYellow([%thread]) %cyan(%logger{15}) - %msg%n"/>
     <property name="MAX_FILE_SIZE" value="500MB"/>
