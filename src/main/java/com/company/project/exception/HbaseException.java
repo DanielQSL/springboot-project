@@ -7,7 +7,10 @@ package com.company.project.exception;
  */
 public class HbaseException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     public HbaseException() {
+        super();
     }
 
     public HbaseException(String message) {
