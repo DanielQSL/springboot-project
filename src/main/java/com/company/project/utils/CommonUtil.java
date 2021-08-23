@@ -32,15 +32,4 @@ public class CommonUtil {
         return mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
     }
 
-    /**
-     * 生成请求ID
-     * 规则：月日+uuid
-     *
-     * @return requestId
-     */
-    public static String generateRequestId() {
-        return DateTimeFormatter.ofPattern("MMdd").format(LocalDateTime.now())
-                + UUID.randomUUID().toString().replace("-", "");
-    }
-
 }
