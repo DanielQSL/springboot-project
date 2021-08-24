@@ -4,16 +4,38 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.regex.Pattern;
 
 /**
- * 获取用户IP
+ * IP工具类
  *
- * @author qianshuailong
- * @date 2020/11/28
+ * @author DanielQSL
  */
 @Slf4j
 public class IpUtil {
 
+    private static final String IPV4_REGEX = "(((\\d{1,2})|(1\\d{1,2})|(2[0-4]\\d)|(25[0-5]))\\.){3}((\\d{1,2})|(1\\d{1,2})|(2[0-4]\\d)|(25[0-5]))";
+
+    private IpUtil() {
+
+    }
+
+    /**
+     * 校验ip是否合法
+     *
+     * @param ip ip地址
+     * @return 是否合法
+     */
+    public static boolean isValid(String ip) {
+        return Pattern.matches(IPV4_REGEX, ip);
+    }
+
+    /**
+     * 获取请求的IP地址
+     *
+     * @param request 请求
+     * @return IP地址
+     */
     public static String getIpAddress(HttpServletRequest request) {
         // 自定义：Header x-user-ip 记录PC，M站用户real-ip
         if (StringUtils.isNotBlank(request.getHeader("x-user-ip"))) {
