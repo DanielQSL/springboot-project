@@ -1,4 +1,4 @@
-package com.company.project.exception.handler;
+package com.company.project.handler;
 
 import com.company.project.common.CommonResponse;
 import com.company.project.enums.ResponseCodeEnum;
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
     public CommonResponse bindExceptionHandler(BindException ex) {
         String errorMsg = ex.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.joining(";", "", ""));
+                .collect(Collectors.joining(";"));
         return CommonResponse.fail(ResponseCodeEnum.BAD_REQUEST, errorMsg);
     }
 
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     public CommonResponse constraintViolationExceptionHandler(ConstraintViolationException ex) {
         String errorMsg = ex.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
-                .collect(Collectors.joining(";", "", ""));
+                .collect(Collectors.joining(";"));
         return CommonResponse.fail(ResponseCodeEnum.BAD_REQUEST, errorMsg);
     }
 
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
     public CommonResponse methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
         String errorMsg = ex.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.joining(";", "", ""));
+                .collect(Collectors.joining(";"));
         return CommonResponse.fail(ResponseCodeEnum.BAD_REQUEST, errorMsg);
     }
 
