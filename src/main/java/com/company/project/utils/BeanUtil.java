@@ -1,12 +1,10 @@
 package com.company.project.utils;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeansException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,8 +14,6 @@ import java.util.List;
  * @date 2021/7/21
  */
 public class BeanUtil {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(BeanUtil.class);
 
     private BeanUtil() {
     }
@@ -31,13 +27,10 @@ public class BeanUtil {
      * @param target 目标对象
      */
     public static void copyProperties(Object source, Object target) {
-        try {
-            BeanUtils.copyProperties(source, target);
-        } catch (BeansException e) {
-            LOGGER.error("BeanUtil property copy failed:BeansException", e);
-        } catch (Exception e) {
-            LOGGER.error("BeanUtil property copy failed:Exception", e);
+        if (source == null) {
+            return;
         }
+        BeanUtils.copyProperties(source, target);
     }
 
     /**
@@ -48,6 +41,9 @@ public class BeanUtil {
      * @return 返回目标集合
      */
     public static <E, T> List<T> copyListProperties(List<E> sources, Class<T> clazz) {
+        if (sources == null || sources.isEmpty()) {
+            return Collections.emptyList();
+        }
         List<T> targets = new ArrayList<>(sources.size());
         if (CollectionUtils.isNotEmpty(sources)) {
             for (E source : sources) {
