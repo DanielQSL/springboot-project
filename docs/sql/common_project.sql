@@ -14,5 +14,7 @@ CREATE TABLE `t_user`
     `update_user` varchar(128)      DEFAULT NULL COMMENT '修改人',
     `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `uk_username` (`username`) USING BTREE,
+    INDEX         `idx_address` (`address`) USING BTREE,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
