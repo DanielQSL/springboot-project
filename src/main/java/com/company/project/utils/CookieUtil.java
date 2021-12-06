@@ -12,30 +12,47 @@ import javax.servlet.http.HttpServletResponse;
 public class CookieUtil {
 
     /**
-     * 默认缓存时间：单位/秒
+     * 永久保存年龄
      */
-    private static final int COOKIE_MAX_AGE = Integer.MAX_VALUE;
+    public static final int PERMANENT_AGE = -1;
 
     /**
-     * 保存路径：根路径
+     * 最大缓存时间：单位/秒
      */
-    private static final String COOKIE_PATH = "/";
+    public static final int COOKIE_MAX_AGE = Integer.MAX_VALUE;
 
-    private CookieUtil(){
+    /**
+     * 默认保存路径：根路径
+     */
+    private static final String DEFAULT_COOKIE_PATH = "/";
+
+    private CookieUtil() {
 
     }
 
     /**
      * 保存
      *
-     * @param response   响应
-     * @param key        键
-     * @param value      值
-     * @param ifRemember 是否永久保存
+     * @param response 响应
+     * @param key      键
+     * @param value    值
+     * @param maxAge   最大年龄 -1代表永久
      */
-    public static void set(HttpServletResponse response, String key, String value, boolean ifRemember) {
-        int age = ifRemember ? COOKIE_MAX_AGE : -1;
-        set(response, key, value, null, COOKIE_PATH, age, true);
+    public static void set(HttpServletResponse response, String key, String value, int maxAge) {
+        set(response, key, value, null, DEFAULT_COOKIE_PATH, maxAge, true);
+    }
+
+    /**
+     * 保存
+     *
+     * @param response 响应
+     * @param key      键
+     * @param value    值
+     * @param domain   域
+     * @param maxAge   最大年龄 -1代表永久
+     */
+    public static void set(HttpServletResponse response, String key, String value, String domain, int maxAge) {
+        set(response, key, value, domain, DEFAULT_COOKIE_PATH, maxAge, true);
     }
 
     /**
@@ -46,10 +63,10 @@ public class CookieUtil {
      * @param value      值
      * @param domain     域
      * @param path       路径
-     * @param maxAge     最大年龄
+     * @param maxAge     最大年龄 -1代表永久
      * @param isHttpOnly 是否对客户端脚本隐藏的标志
      */
-    private static void set(HttpServletResponse response, String key, String value, String domain, String path, int maxAge, boolean isHttpOnly) {
+    public static void set(HttpServletResponse response, String key, String value, String domain, String path, int maxAge, boolean isHttpOnly) {
         Cookie cookie = new Cookie(key, value);
         if (domain != null) {
             cookie.setDomain(domain);
@@ -99,13 +116,38 @@ public class CookieUtil {
      *
      * @param request  请求
      * @param response 响应
+     * @param domain   域
+     * @param path     路径
+     * @param key      键
+     */
+    public static void remove(HttpServletRequest request, HttpServletResponse response, String domain, String path, String key) {
+        Cookie cookie = get(request, key);
+        if (cookie != null) {
+            set(response, key, "", domain, path, 0, true);
+        }
+    }
+
+    /**
+     * 删除Cookie
+     *
+     * @param request  请求
+     * @param response 响应
+     * @param domain   域
+     * @param key      键
+     */
+    public static void remove(HttpServletRequest request, HttpServletResponse response, String domain, String key) {
+        remove(request, response, domain, DEFAULT_COOKIE_PATH, key);
+    }
+
+    /**
+     * 删除Cookie
+     *
+     * @param request  请求
+     * @param response 响应
      * @param key      键
      */
     public static void remove(HttpServletRequest request, HttpServletResponse response, String key) {
-        Cookie cookie = get(request, key);
-        if (cookie != null) {
-            set(response, key, "", null, COOKIE_PATH, 0, true);
-        }
+        remove(request, response, null, DEFAULT_COOKIE_PATH, key);
     }
 
 }
