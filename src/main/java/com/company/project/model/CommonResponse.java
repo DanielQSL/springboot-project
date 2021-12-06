@@ -1,4 +1,4 @@
-package com.company.project.common;
+package com.company.project.model;
 
 import com.company.project.enums.ResponseCodeEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;

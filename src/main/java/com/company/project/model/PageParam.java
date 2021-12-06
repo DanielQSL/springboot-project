@@ -1,4 +1,4 @@
-package com.company.project.common;
+package com.company.project.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,6 +15,8 @@ import java.io.Serializable;
  */
 @ApiModel("分页参数")
 public class PageParam implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @NotNull(message = "页码不能为空")
     @Min(value = 1, message = "页码最小值为 1")

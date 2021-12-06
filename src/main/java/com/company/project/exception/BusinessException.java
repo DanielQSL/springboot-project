@@ -1,6 +1,6 @@
 package com.company.project.exception;
 
-import com.company.project.common.BaseCommonError;
+import com.company.project.model.BaseCommonError;
 
 /**
  * 自定义业务异常

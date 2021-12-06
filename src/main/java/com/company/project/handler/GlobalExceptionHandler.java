@@ -1,6 +1,6 @@
 package com.company.project.handler;
 
-import com.company.project.common.CommonResponse;
+import com.company.project.model.CommonResponse;
 import com.company.project.enums.ResponseCodeEnum;
 import com.company.project.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;

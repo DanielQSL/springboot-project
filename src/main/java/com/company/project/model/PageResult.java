@@ -1,4 +1,4 @@
-package com.company.project.common;
+package com.company.project.model;
 
 import java.io.Serializable;
 import java.util.List;

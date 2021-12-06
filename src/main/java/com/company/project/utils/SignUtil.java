@@ -1,7 +1,7 @@
 package com.company.project.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.company.project.common.CommonResponse;
+import com.company.project.model.CommonResponse;
 import com.company.project.enums.ResponseCodeEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

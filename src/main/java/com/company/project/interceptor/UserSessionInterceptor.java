@@ -1,6 +1,6 @@
 package com.company.project.interceptor;
 
-import com.company.project.common.CommonResponse;
+import com.company.project.model.CommonResponse;
 import com.company.project.context.UserContext;
 import com.company.project.context.UserContextHolder;
 import com.company.project.enums.ResponseCodeEnum;

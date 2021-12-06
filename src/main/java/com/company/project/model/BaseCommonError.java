@@ -1,4 +1,4 @@
-package com.company.project.common;
+package com.company.project.model;
 
 /**
  * 通用错误接口

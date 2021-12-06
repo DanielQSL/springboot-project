@@ -1,6 +1,6 @@
 package com.company.project.enums;
 
-import com.company.project.common.BaseCommonError;
+import com.company.project.model.BaseCommonError;
 
 /**
  * 全局错误码
