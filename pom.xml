@@ -28,6 +28,7 @@
 <!--        <spring-boot-2.3.x>2.3.10.RELEASE</spring-boot-2.3.x>-->
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+        <log4j2.version>2.16.0</log4j2.version>
     </properties>
 
     <dependencies>
