@@ -3,8 +3,8 @@ package com.company.project.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 健康检测 Controller层
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author danielqsl
  */
 @Controller
-@RequestMapping("/")
 public class HealthCheckController {
 
     /**
@@ -28,7 +27,7 @@ public class HealthCheckController {
      *
      * @return 响应
      */
-    @GetMapping("/healthcheck")
+    @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
     public ResponseEntity<String> healthCheck() {
         if (finishedFlag) {
             return ResponseEntity.ok("OK");
