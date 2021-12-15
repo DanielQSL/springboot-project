@@ -198,4 +198,19 @@ public class JsonUtil {
         return str.replace(" ", "").replace("\r", "").replace("\n", "").replace("\t", "");
     }
 
+    /**
+     * 是否为有效Json字符串
+     *
+     * @param jsonStr Json字符串
+     * @return 是否有效
+     */
+    public static boolean isValidJsonStr(String jsonStr) {
+        try {
+            OBJECT_MAPPER.readTree(jsonStr);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
