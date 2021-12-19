@@ -1,7 +1,7 @@
 package com.company.project.converter;
 
-import com.company.project.dto.StudentDTO;
-import com.company.project.dto.StudentVO;
+import com.company.project.pojo.StudentDTO;
+import com.company.project.pojo.StudentVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
