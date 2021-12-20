@@ -1,6 +1,6 @@
 package com.company.project.utils;
 
-import com.company.project.dto.EnumVO;
+import com.company.project.pojo.EnumVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
