@@ -1,14 +1,16 @@
 package com.company.project.interceptor;
 
-import com.company.project.model.CommonResponse;
 import com.company.project.context.UserContext;
 import com.company.project.context.UserContextHolder;
 import com.company.project.enums.ResponseCodeEnum;
+import com.company.project.model.CommonResponse;
 import com.company.project.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -40,6 +43,12 @@ public class UserSessionInterceptor implements HandlerInterceptor {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    @Value("${login.auth.enabled:true}")
+    private Boolean loginEnabled;
+
+    @Value("#{'${login.url.whiteList:}'.split(',')}")
+    private List<String> loginUrlWhiteList;
+
     /**
      * 拦截请求，在Controller方法处理之前
      *
@@ -47,6 +56,15 @@ public class UserSessionInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 是否开启登录验证
+        if (!loginEnabled) {
+            return true;
+        }
+        // 判断url是否为登录白名单地址
+        if (isWhiteListLoginUrl(request)) {
+            return true;
+        }
+
         String userToken = this.getToken(request);
 
         if (StringUtils.isBlank(userToken)) {
@@ -62,6 +80,24 @@ public class UserSessionInterceptor implements HandlerInterceptor {
         // 设置UserThreadLocal
         UserContextHolder.setCurrentUser(userInfo);
         return true;
+    }
+
+    /**
+     * 判断url是否为登录白名单地址
+     *
+     * @param request HttpServletRequest
+     * @return 是否
+     */
+    private boolean isWhiteListLoginUrl(HttpServletRequest request) {
+        if (CollectionUtils.isEmpty(loginUrlWhiteList)) {
+            return false;
+        }
+        for (String url : loginUrlWhiteList) {
+            if (url.equals(request.getRequestURI())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -90,7 +126,6 @@ public class UserSessionInterceptor implements HandlerInterceptor {
     public void generateResponse(HttpServletResponse response, CommonResponse result)
             throws IOException {
         try (OutputStream out = response.getOutputStream()) {
-//            response.setHeader("content-type", "application/json;charset=UTF-8");
             response.setContentType("application/json;charset=UTF-8");
             out.write(JsonUtil.toJsonString(result).getBytes(StandardCharsets.UTF_8));
             out.flush();
