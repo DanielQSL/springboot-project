@@ -21,25 +21,23 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <!--   END    -->
-<!--        <spring-boot-1.x>1.5.14.RELEASE</spring-boot-1.x>-->
-<!--        <spring-boot-2.0.x>2.0.8.RELEASE</spring-boot-2.0.x>-->
-<!--        <spring-boot-2.1.x>2.1.10.RELEASE</spring-boot-2.1.x>-->
-<!--        <spring-boot-2.2.x>2.2.9.RELEASE</spring-boot-2.2.x>-->
-<!--        <spring-boot-2.3.x>2.3.10.RELEASE</spring-boot-2.3.x>-->
+        <!--        <spring-boot-1.x>1.5.14.RELEASE</spring-boot-1.x>-->
+        <!--        <spring-boot-2.0.x>2.0.8.RELEASE</spring-boot-2.0.x>-->
+        <!--        <spring-boot-2.1.x>2.1.10.RELEASE</spring-boot-2.1.x>-->
+        <!--        <spring-boot-2.2.x>2.2.9.RELEASE</spring-boot-2.2.x>-->
+        <!--        <spring-boot-2.3.x>2.3.10.RELEASE</spring-boot-2.3.x>-->
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
-        <log4j2.version>2.16.0</log4j2.version>
+        <log4j2.version>2.17.0</log4j2.version>
+        <project-base.version>1.0.2</project-base.version>
     </properties>
 
     <dependencies>
+        <!-- 项目所需基础包 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
+            <groupId>com.github.DanielQSL.project-demo</groupId>
+            <artifactId>project-base</artifactId>
+            <version>${project-base.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -49,6 +47,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- SpringBoot AOP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!-- 参数校验 -->
         <dependency>
@@ -61,10 +64,20 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- SpringBoot AOP -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
         <!-- 常用库依赖 -->
         <dependency>
@@ -80,12 +93,6 @@
             <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
         </dependency>
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
         <!-- jackson（自动引入 jackson-core 和 jackson-annotations） -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -97,32 +104,24 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.73</version>
         </dependency>
+        <!-- guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>29.0-jre</version>
+        </dependency>
+        <!-- hutool工具类 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.3</version>
+        </dependency>
+
         <!-- MySQL JDBC驱动 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <!-- Redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>2.8.0</version>
-        </dependency>
-        <!-- JPA -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- druid -->
         <dependency>
@@ -141,6 +140,27 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.12</version>
+        </dependency>
+        <!-- JPA -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.8.0</version>
         </dependency>
         <!-- Swagger2 -->
         <dependency>
@@ -164,18 +184,6 @@
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>${swagger-bootstrap-ui.version}</version>
         </dependency>
-        <!-- guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>29.0-jre</version>
-        </dependency>
-        <!-- hutool工具类 -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.4.3</version>
-        </dependency>
         <!-- MapStruct对象映射 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -186,23 +194,6 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
             <version>1.4.2.Final</version>
-        </dependency>
-        <!-- php序列化和反序列化工具 -->
-        <dependency>
-            <groupId>com.xk72</groupId>
-            <artifactId>pherialize</artifactId>
-            <version>1.2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.10.2</version>
-        </dependency>
-        <!-- 线程池和线程池之间可以传递的参数的插件 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>transmittable-thread-local</artifactId>
-            <version>2.11.2</version>
         </dependency>
         <!-- Apache的httpclient -->
         <dependency>
@@ -216,23 +207,40 @@
             <artifactId>okhttp</artifactId>
             <version>4.9.0</version>
         </dependency>
-        <!-- 计算对象大小 -->
+        <!-- 线程池和线程池之间可以传递的参数的插件 -->
         <dependency>
-            <groupId>com.carrotsearch</groupId>
-            <artifactId>java-sizeof</artifactId>
-            <version>0.0.5</version>
-        </dependency>
-        <!-- APOLLO -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-client</artifactId>
-            <version>1.7.0</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+            <version>2.11.2</version>
         </dependency>
         <!-- caffeine缓存 -->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
             <version>2.9.2</version>
+        </dependency>
+        <!-- 计算对象大小 -->
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>java-sizeof</artifactId>
+            <version>0.0.5</version>
+        </dependency>
+        <!-- php序列化和反序列化工具 -->
+        <dependency>
+            <groupId>com.xk72</groupId>
+            <artifactId>pherialize</artifactId>
+            <version>1.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.10.2</version>
+        </dependency>
+        <!-- APOLLO -->
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.7.0</version>
         </dependency>
         <!-- 参数校验 -->
         <dependency>
@@ -249,6 +257,10 @@
     </dependencies>
 
     <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
         <!-- 公司私服 -->
         <repository>
             <id>company_nexus</id>
@@ -261,7 +273,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-
     </repositories>
 
     <!-- 发布配置 -->
