@@ -19,4 +19,12 @@ public final class CommonConstants {
         String DISABLE = "N";
     }
 
+    /**
+     * 是否状态
+     */
+    public interface YesOrNoStatus {
+        Integer NO = 0;
+        Integer YES = 1;
+    }
+
 }
