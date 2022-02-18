@@ -15,8 +15,9 @@
     <description>SpringBoot项目常用类</description>
 
     <properties>
-        <!--   以下这些在Spring-boot中已经定义，故可以省略     -->
+        <!--   项目基础     -->
         <java.version>1.8</java.version>
+        <!--   以下这些在Spring-boot中已经定义，故可以省略     -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -26,14 +27,18 @@
         <!--        <spring-boot-2.1.x>2.1.10.RELEASE</spring-boot-2.1.x>-->
         <!--        <spring-boot-2.2.x>2.2.9.RELEASE</spring-boot-2.2.x>-->
         <!--        <spring-boot-2.3.x>2.3.10.RELEASE</spring-boot-2.3.x>-->
+
+        <!--   内部依赖     -->
+        <project-base.version>1.0.2</project-base.version>
+
+        <!--   第三方依赖     -->
+        <log4j2.version>2.17.0</log4j2.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
-        <log4j2.version>2.17.0</log4j2.version>
-        <project-base.version>1.0.2</project-base.version>
     </properties>
 
     <dependencies>
-        <!-- 项目所需基础包 -->
+        <!-- ↓↓↓↓↓=============项目基础依赖=============↓↓↓↓↓ -->
         <dependency>
             <groupId>com.github.DanielQSL.project-demo</groupId>
             <artifactId>project-base</artifactId>
@@ -73,16 +78,13 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- lombok -->
+        <!-- ↑↑↑↑↑=============项目基础依赖=============↑↑↑↑↑ -->
+
+        <!-- ↓↓↓↓↓=============常用工具类依赖=============↓↓↓↓↓ -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <!-- 常用库依赖 -->
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -92,6 +94,10 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
         <!-- jackson（自动引入 jackson-core 和 jackson-annotations） -->
         <dependency>
@@ -116,14 +122,20 @@
             <artifactId>hutool-all</artifactId>
             <version>5.4.3</version>
         </dependency>
+        <!-- ↑↑↑↑↑=============常用工具类依赖=============↑↑↑↑↑ -->
 
+        <!-- ↓↓↓↓↓=============公司内部依赖=============↓↓↓↓↓ -->
+
+        <!-- ↑↑↑↑↑=============公司内部类依赖=============↑↑↑↑↑ -->
+
+        <!-- ↓↓↓↓↓=============第三方依赖=============↓↓↓↓↓ -->
         <!-- MySQL JDBC驱动 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- druid -->
+        <!-- Druid数据库连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
@@ -134,6 +146,12 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.3.2</version>
+        </dependency>
+        <!-- MyBatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.2.0</version>
         </dependency>
         <!-- MyBatis分页 -->
         <dependency>
@@ -152,6 +170,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <!-- Redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -183,6 +202,12 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>${swagger-bootstrap-ui.version}</version>
+        </dependency>
+        <!-- swagger2注释 -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.22</version>
         </dependency>
         <!-- MapStruct对象映射 -->
         <dependency>
@@ -231,16 +256,11 @@
             <artifactId>pherialize</artifactId>
             <version>1.2.4</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.10.2</version>
-        </dependency>
-        <!-- APOLLO -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-client</artifactId>
-            <version>1.7.0</version>
         </dependency>
         <!-- 参数校验 -->
         <dependency>
@@ -248,12 +268,13 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.16.Final</version>
         </dependency>
-        <!-- swagger2注释 -->
+        <!-- APOLLO -->
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.5.22</version>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.7.0</version>
         </dependency>
+        <!-- ↑↑↑↑↑=============第三方依赖=============↑↑↑↑↑ -->
     </dependencies>
 
     <repositories>
