@@ -23,18 +23,29 @@ public enum LabelQueryTypeEnum {
     private final String desc;
 
     /**
+     * 根据code获取枚举
+     *
+     * @param code code
+     * @return 枚举
+     */
+    public static LabelQueryTypeEnum getEnumByCode(int code) {
+        for (LabelQueryTypeEnum labelQueryTypeEnum : values()) {
+            if (labelQueryTypeEnum.getCode() == code) {
+                return labelQueryTypeEnum;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 根据code获取描述
      *
      * @param code code
      * @return 描述
      */
     public static String getDescByCode(int code) {
-        for (LabelQueryTypeEnum labelQueryTypeEnum : values()) {
-            if (labelQueryTypeEnum.getCode() == code) {
-                return labelQueryTypeEnum.getDesc();
-            }
-        }
-        return null;
+        LabelQueryTypeEnum e = getEnumByCode(code);
+        return null == e ? null : e.getDesc();
     }
 
     /**
@@ -47,21 +58,6 @@ public enum LabelQueryTypeEnum {
         for (LabelQueryTypeEnum labelQueryTypeEnum : values()) {
             if (labelQueryTypeEnum.getDesc().equals(desc)) {
                 return labelQueryTypeEnum.getCode();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 根据code找到对应的枚举
-     *
-     * @param code 编码
-     * @return 枚举类型
-     */
-    public static LabelQueryTypeEnum codeParse(int code) {
-        for (LabelQueryTypeEnum labelQueryTypeEnum : values()) {
-            if (labelQueryTypeEnum.getCode() == code) {
-                return labelQueryTypeEnum;
             }
         }
         return null;

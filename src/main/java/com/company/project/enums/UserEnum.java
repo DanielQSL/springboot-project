@@ -26,8 +26,10 @@ public class UserEnum {
 
         private static Map<Integer, Sex> data = new HashMap<>();
 
+//        private static Map<Integer, Sex> data = Arrays.stream(values()).collect(Collectors.toMap(Sex::getCode, Function.identity()));
+
         static {
-            for (Sex sex : Sex.values()) {
+            for (Sex sex : values()) {
                 data.put(sex.code, sex);
             }
         }
