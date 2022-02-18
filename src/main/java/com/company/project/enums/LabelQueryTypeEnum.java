@@ -19,18 +19,25 @@ public enum LabelQueryTypeEnum {
     USER_ID(3, "user_id"),
     ;
 
-    private final Integer code;
+    /**
+     * 值
+     */
+    private final Integer value;
+
+    /**
+     * 描述
+     */
     private final String desc;
 
     /**
-     * 根据code获取枚举
+     * 根据 value 获取枚举
      *
-     * @param code code
+     * @param value value
      * @return 枚举
      */
-    public static LabelQueryTypeEnum getEnumByCode(int code) {
+    public static LabelQueryTypeEnum getEnumByValue(int value) {
         for (LabelQueryTypeEnum labelQueryTypeEnum : values()) {
-            if (labelQueryTypeEnum.getCode() == code) {
+            if (labelQueryTypeEnum.getValue() == value) {
                 return labelQueryTypeEnum;
             }
         }
@@ -38,26 +45,26 @@ public enum LabelQueryTypeEnum {
     }
 
     /**
-     * 根据code获取描述
+     * 根据 value 获取描述
      *
-     * @param code code
+     * @param value value
      * @return 描述
      */
-    public static String getDescByCode(int code) {
-        LabelQueryTypeEnum e = getEnumByCode(code);
+    public static String getDescByValue(int value) {
+        LabelQueryTypeEnum e = getEnumByValue(value);
         return null == e ? null : e.getDesc();
     }
 
     /**
-     * 根据描述获取code
+     * 根据描述获取 value
      *
      * @param desc 描述
-     * @return code
+     * @return value
      */
-    public static Integer getCodeByDesc(String desc) {
+    public static Integer getValueByDesc(String desc) {
         for (LabelQueryTypeEnum labelQueryTypeEnum : values()) {
             if (labelQueryTypeEnum.getDesc().equals(desc)) {
-                return labelQueryTypeEnum.getCode();
+                return labelQueryTypeEnum.getValue();
             }
         }
         return null;

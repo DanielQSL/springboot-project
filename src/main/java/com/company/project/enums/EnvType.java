@@ -12,14 +12,17 @@ public enum EnvType {
      */
     DEV("dev"), QA("qa"), PL("pl"), ONLINE("online");
 
-    private final String desc;
+    /**
+     * 值
+     */
+    private final String value;
 
-    EnvType(String desc) {
-        this.desc = desc;
+    EnvType(String value) {
+        this.value = value;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getValue() {
+        return value;
     }
 
 }

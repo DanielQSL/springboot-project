@@ -42,8 +42,15 @@ public enum ApprovalStatusEnum {
         }
     };
 
-    private final Integer code;
-    private final String msg;
+    /**
+     * 值
+     */
+    private final Integer value;
+
+    /**
+     * 描述
+     */
+    private final String desc;
 
     /**
      * 获取下一个状态

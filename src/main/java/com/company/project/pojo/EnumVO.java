@@ -11,7 +11,7 @@ import lombok.Data;
 public class EnumVO {
 
     /**
-     * 键
+     * 标签
      */
     private String label;
 

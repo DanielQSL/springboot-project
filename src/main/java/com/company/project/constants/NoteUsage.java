@@ -11,7 +11,7 @@ import com.company.project.enums.LabelQueryTypeEnum;
  * @author danielqsl
  * <p>
  * 跳转到指定类的指定方法
- * @see LabelQueryTypeEnum#getCodeByDesc(String)
+ * @see LabelQueryTypeEnum#getValueByDesc(String)
  */
 public class NoteUsage {
 }

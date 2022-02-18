@@ -44,9 +44,9 @@ public class EnumUtil {
         }
         int count = methodNames.length;
         //默认的取 key的方法
-        String keyMethod = "getCode";
+        String keyMethod = "getValue";
         //默认的取 value 的方法
-        String valueMethod = "getName";
+        String valueMethod = "getDesc";
         if (count >= ONE && !methodNames[0].equals(StringUtils.EMPTY)) {
             //如果方法的长度是大于等于1的,并且不为空
             keyMethod = methodNames[0];
