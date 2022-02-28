@@ -54,6 +54,9 @@ spring:
     request-context-attribute: request
 
 mybatis-plus:
+  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
   mapper-locations: classpath*:mapper/*.xml
   global-config:
     db-config:

@@ -148,7 +148,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.2</version>
+            <version>3.4.3.4</version>
         </dependency>
         <!-- MyBatis -->
         <dependency>
@@ -194,7 +194,17 @@
                     <artifactId>guava</artifactId>
                     <groupId>com.google.guava</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
             </exclusions>
+        </dependency>
+        <!-- swagger2注释 -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.22</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -205,12 +215,6 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>${swagger-bootstrap-ui.version}</version>
-        </dependency>
-        <!-- swagger2注释 -->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.5.22</version>
         </dependency>
         <!-- MapStruct对象映射 -->
         <dependency>
