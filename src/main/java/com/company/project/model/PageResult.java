@@ -1,5 +1,7 @@
 package com.company.project.model;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -36,6 +38,23 @@ public class PageResult<T> implements Serializable {
      * 结果集
      */
     private List<T> list;
+
+    public PageResult() {
+    }
+
+    /**
+     * 处理 Mybatis plus 分页查询结果包装成统一分页信息返回
+     *
+     * @param page Mybatis plus 分页查询结果
+     */
+    public PageResult(IPage<T> page) {
+        if (page != null) {
+            this.pageNum = (int) page.getCurrent();
+            this.pageSize = (int) page.getSize();
+            this.total = page.getTotal();
+            this.list = page.getRecords();
+        }
+    }
 
     public Integer getPageNum() {
         return pageNum;
