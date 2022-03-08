@@ -49,9 +49,9 @@ public enum OrderStatusEnum {
      * @return 枚举
      */
     public static OrderStatusEnum getByValue(int value) {
-        for (OrderStatusEnum element : values()) {
-            if (element.getValue() == value) {
-                return element;
+        for (OrderStatusEnum e : values()) {
+            if (e.getValue() == value) {
+                return e;
             }
         }
         return null;
@@ -75,9 +75,9 @@ public enum OrderStatusEnum {
      * @return value
      */
     public static Integer getValueByDesc(String desc) {
-        for (OrderStatusEnum element : values()) {
-            if (element.getDesc().equals(desc)) {
-                return element.getValue();
+        for (OrderStatusEnum e : values()) {
+            if (e.getDesc().equals(desc)) {
+                return e.getValue();
             }
         }
         return null;
@@ -90,8 +90,8 @@ public enum OrderStatusEnum {
      */
     public static Map<Integer, String> toMap() {
         Map<Integer, String> map = new HashMap<>(16);
-        for (OrderStatusEnum element : values()) {
-            map.put(element.getValue(), element.getDesc());
+        for (OrderStatusEnum e : values()) {
+            map.put(e.getValue(), e.getDesc());
         }
         return map;
     }
