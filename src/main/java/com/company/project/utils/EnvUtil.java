@@ -55,19 +55,19 @@ public class EnvUtil {
 
         if (hostname != null) {
             if (hostname.contains("-dev-")) {
-                return EnvType.DEV.getDesc();
+                return EnvType.DEV.getValue();
             }
             if (hostname.contains("-qa-")) {
-                return EnvType.QA.getDesc();
+                return EnvType.QA.getValue();
             }
             if (hostname.contains("-pl-")) {
-                return EnvType.PL.getDesc();
+                return EnvType.PL.getValue();
             }
             if (hostname.contains("-online-")) {
-                return EnvType.ONLINE.getDesc();
+                return EnvType.ONLINE.getValue();
             }
         }
-        return EnvType.DEV.getDesc();
+        return EnvType.DEV.getValue();
     }
 
 }
