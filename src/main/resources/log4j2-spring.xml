@@ -4,52 +4,62 @@
 <configuration status="error" monitorInterval="30">
     <!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
 
-    <!--变量配置-->
+    <!-- 变量配置 -->
     <Properties>
         <!-- 格式化输出：%date 表示日期，%thread 表示线程名，%-5level：级别从左显示 5 个字符宽度 %msg：日志消息，%n 是换行符-->
         <!-- %logger{36} 表示 Logger 名字最长 36 个字符 -->
-        <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{36}:%L] - %msg%xEx%n"/>
-        <property name="CONSOLE_LOG_PATTERN" value="%style{%d{ISO8601}}{bright,white} %highlight{%-5level} [%style{%t}{bright,blue}] [%style{%C{1.}}{bright,yellow}:%L] - %msg%n%style{%throwable}{red}"/>
+        <property name="CONSOLE_LOG_PATTERN"
+                  value="%style{%d{ISO8601}}{bright,white} %highlight{%-5level} [%style{%t}{bright,blue}] [%style{%C{1.}}{bright,yellow}:%L] - %msg%n%style{%throwable}{red}"/>
+        <property name="LOG_PATTERN"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{36}:%L] - %msg%xEx%n"/>
+        <property name="JSON_LOG_PATTERN">{"log_time":"%d{yyyy-MM-dd HH:mm:ss.SSS}","logType":"app_java","app_id":"${APP_NAME}","level":"%p","thread":"%t","trace_id":"%X{trace_id}","class_name":"%c","method_name":"%M","code_line":%L,"message":"%enc{%m %ex}{JSON}"}%n</property>
         <!-- 定义日志存储的路径 -->
         <property name="FILE_PATH" value="./log"/>
-        <property name="FILE_NAME" value="dfs"/>
+        <property name="APP_NAME" value="project-demo"/>
+        <property name="MAX_FILE_SIZE" value="100 MB"/>
+        <property name="MAX_HISTORY" value="30d"/>
     </Properties>
 
     <appenders>
-        <!--输出控制台的配置-->
-        <console name="Console" target="SYSTEM_OUT">
-            <!--输出日志的格式-->
+        <!-- 输出控制台的配置 -->
+        <console name="ConsoleAppender" target="SYSTEM_OUT">
             <PatternLayout pattern="${CONSOLE_LOG_PATTERN}" charset="UTF-8"/>
         </console>
 
+        <!-- 临时打印到文件的日志信息，特别适合测试环境的日志打印，每次系统重启都会清空文件 -->
+        <File name="TestFileAppender" fileName="${FILE_PATH}/${APP_NAME}/test.log" append="false">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+        </File>
+
+        <!-- rolling，一个日志文件存满了以后，可以让他自动归档到指定目录下，也可以保留几个文件，超过文件数量就清理掉 -->
         <!-- 这个会打印出所有的info及以上级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
-        <!--<RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/${FILE_NAME}/${FILE_NAME}.log"
-                     filePattern="${FILE_PATH}/${FILE_NAME}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz" append="true">
+        <RollingFile name="InfoRollingFileAppender" fileName="${FILE_PATH}/${APP_NAME}/info.log"
+                     filePattern="${FILE_PATH}/${APP_NAME}/${APP_NAME}-INFO-%d{yyyy-MM-dd}-%i.log.gz"
+                     append="true">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
             <Policies>
-                &lt;!&ndash; 基于时间的触发策略。该策略主要是完成周期性的log文件封存工作。有两个参数：
+                <!-- 基于时间的触发策略。该策略主要是完成周期性的log文件封存工作。有两个参数：
                interval，integer型，指定两次封存动作之间的时间间隔。单位:以日志的命名精度来确定单位，
                    比如yyyy-MM-dd-HH 单位为小时，yyyy-MM-dd-HH-mm 单位为分钟
                modulate，boolean型，说明是否对封存时间进行调制。若modulate=true，
                    则封存时间将以0点为边界进行偏移计算。比如，modulate=true，interval=4hours，
-                   那么假设上次封存日志的时间为00:00，则下次封存日志的时间为04:00，
-                   之后的封存时间依次为08:00，12:00，16:00&ndash;&gt;
+                   那么假设上次封存日志的时间为00:00，则下次封存日志的时间为04:00，之后的封存时间依次为08:00，12:00，16:00-->
                 <TimeBasedTriggeringPolicy interval="1"/>
-                <SizeBasedTriggeringPolicy size="100MB"/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
             </Policies>
-            &lt;!&ndash; DefaultRolloverStrategy 属性如不设置，则默认为最多同一文件夹下当天 7 个文件后开始覆盖&ndash;&gt;
+            <!-- DefaultRolloverStrategy 属性如不设置，则默认为最多同一文件夹下当天 7 个文件后开始覆盖-->
             <DefaultRolloverStrategy max="30">
-                &lt;!&ndash; 删除处理策略，在配置的路径中搜索，maxDepth 表示往下搜索的最大深度 &ndash;&gt;
-                <Delete basePath="${FILE_PATH}/${FILE_NAME}/" maxDepth="2">
-                    &lt;!&ndash; 文件名搜索匹配，支持正则 &ndash;&gt;
+                <!-- 删除处理策略，在配置的路径中搜索，maxDepth 表示往下搜索的最大深度 -->
+                <Delete basePath="${FILE_PATH}/${APP_NAME}/" maxDepth="2">
+                    <!-- 文件名搜索匹配，支持正则 -->
                     <IfFileName glob="*.log.gz"/>
-                    &lt;!&ndash;!Note: 这里的 age 必须和 filePattern 协调, 后者是精确到 dd, 这里就要写成 xd, xD 就不起作用
-                    另外, 数字最好 >2, 否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功!&ndash;&gt;
-                    &lt;!&ndash;7天&ndash;&gt;
-                    <IfLastModified age="7d"/>
+                    <!--!Note: 这里的 age 必须和 filePattern 协调, 后者是精确到 dd, 这里就要写成 xd, xD 就不起作用
+                    另外, 数字最好 >2, 否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功!-->
+                    <IfLastModified age="${MAX_HISTORY}"/>
                 </Delete>
             </DefaultRolloverStrategy>
-        </RollingFile>-->
+        </RollingFile>
     </appenders>
 
     <!--Logger 节点用来单独指定日志的形式，比如要为指定包下的 class 指定不同的日志级别等。-->
@@ -57,25 +67,22 @@
     <loggers>
         <!--过滤掉mybatis的一些无用的DEBUG信息-->
         <logger name="org.mybatis" level="INFO"/>
-        <root level="info">
-            <appender-ref ref="Console"/>
-            <!--<appender-ref ref="RollingFileInfo"/>-->
+
+        <root level="INFO">
+            <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="InfoRollingFileAppender"/>
         </root>
 
         <!--若是 additivity 设为 false，则子 Logger 只会在自己的 appender 里输出，而不会在父 Logger 的 appender 里输出。-->
         <!--Console、RollingFileInfo 没有配置 ThresholdFilter，默认走的是 AsyncRoot 的 level 级别，
-            com.songo.mapper 为我项目 mapper 的包路径，级别设为 debug，可以打印 sql 语句-->
-        <!--<AsyncLogger name="com.qsl.mapper" level="debug" additivity="false">
-            <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFileInfo"/>
-        </AsyncLogger>
-        <AsyncLogger name="org.springframework" level="warn" additivity="false">
-            <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFileInfo"/>
-        </AsyncLogger>
-        <AsyncRoot level="info" includeLocation="true">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFileInfo"/>
-        </AsyncRoot>-->
+            com.qsl.mapper 为我项目 mapper 的包路径，级别设为 debug，可以打印 sql 语句-->
+        <asyncLogger name="com.qsl.mapper" level="DEBUG" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="InfoRollingFileAppender"/>
+        </asyncLogger>
+        <asyncRoot level="INFO" includeLocation="true">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="InfoRollingFileAppender"/>
+        </asyncRoot>
     </loggers>
 </configuration>
