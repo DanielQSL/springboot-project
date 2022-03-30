@@ -15,6 +15,10 @@ spring:
     name: MyProject
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-request-size: 50MB
+      max-file-size: 50MB
 
   jpa:
     show-sql: true
