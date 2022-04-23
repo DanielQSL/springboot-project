@@ -14,12 +14,11 @@ public class RandomUtil {
      *
      * @param min 区间最小值(不包含)
      * @param max 区间最大值(不包含)
-     * @return
+     * @return 随机数
      */
     public static int genNum(int min, int max) {
         if (min >= max - 1) {
-            // 自行异常处理, 此时简单返回0
-            return 0;
+            throw new IllegalArgumentException("invalid params");
         }
         Random random = new Random();
         return random.nextInt(max - min - 1) + min + 1;
@@ -30,12 +29,11 @@ public class RandomUtil {
      *
      * @param min 区间最小值(包含)
      * @param max 区间最大值(不包含)
-     * @return
+     * @return 随机数
      */
     public static int genNumIncludeMin(int min, int max) {
         if (min >= max) {
-            // 自行异常处理, 此时简单返回0
-            return 0;
+            throw new IllegalArgumentException("invalid params");
         }
         Random random = new Random();
         return random.nextInt(max - min) + min;
@@ -46,7 +44,7 @@ public class RandomUtil {
      *
      * @param min 区间最小值(不包含)
      * @param max 区间最大值(包含)
-     * @return
+     * @return 随机数
      */
     public static int genNumIncludeMax(int min, int max) {
         return genNumIncludeMin(min, max) + 1;
@@ -57,12 +55,11 @@ public class RandomUtil {
      *
      * @param min 区间最小值(包含)
      * @param max 区间最大值(包含)
-     * @return
+     * @return 随机数
      */
     public static int genNumIncludeMinAndMax(int min, int max) {
         if (min >= max + 1) {
-            // 自行异常处理, 此时简单返回0
-            return 0;
+            throw new IllegalArgumentException("invalid params");
         }
         Random random = new Random();
         return random.nextInt(max - min + 1) + min;
@@ -72,12 +69,11 @@ public class RandomUtil {
      * 生成指定长度随机数
      *
      * @param len 指定长度
-     * @return
+     * @return 随机数
      */
     public static int genNumByLen(int len) {
         if (len < 1 || len > 9) {
-            // 自行异常处理, 此时简单返回0
-            return 0;
+            throw new IllegalArgumentException("invalid params");
         }
         return Integer.parseInt(genNumStrByLen(len));
     }
@@ -86,12 +82,11 @@ public class RandomUtil {
      * 生成指定长度随机数
      *
      * @param len 指定长度
-     * @return
+     * @return 随机数字符串
      */
     public static String genNumStrByLen(int len) {
         if (len < 1) {
-            // 自行异常处理, 此时简单返回"0"
-            return "0";
+            throw new IllegalArgumentException("invalid params");
         }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < len; i++) {
