@@ -11,7 +11,7 @@ import com.company.project.enums.OrderStatusEnum;
  * @author danielqsl
  * <p>
  * 跳转到指定类的指定方法
- * @see OrderStatusEnum#getValueByDesc(String)
+ * @see OrderStatusEnum#getCodeByDesc(String)
  */
 public class NoteUsage {
 }

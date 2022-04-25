@@ -33,9 +33,9 @@ public enum OrderStatusEnum {
     ;
 
     /**
-     * 值
+     * 代码
      */
-    private final Integer value;
+    private final Integer code;
 
     /**
      * 描述
@@ -43,14 +43,14 @@ public enum OrderStatusEnum {
     private final String desc;
 
     /**
-     * 根据 value 获取枚举
+     * 根据 code 获取枚举
      *
-     * @param value value
+     * @param code code
      * @return 枚举
      */
-    public static OrderStatusEnum getByValue(int value) {
+    public static OrderStatusEnum getByCode(int code) {
         for (OrderStatusEnum e : values()) {
-            if (e.getValue() == value) {
+            if (e.getCode() == code) {
                 return e;
             }
         }
@@ -58,26 +58,26 @@ public enum OrderStatusEnum {
     }
 
     /**
-     * 根据 value 获取描述
+     * 根据 code 获取描述
      *
-     * @param value value
+     * @param code code
      * @return 描述
      */
-    public static String getDescByValue(int value) {
-        OrderStatusEnum e = getByValue(value);
+    public static String getDescByCode(int code) {
+        OrderStatusEnum e = getByCode(code);
         return null == e ? null : e.getDesc();
     }
 
     /**
-     * 根据描述获取 value
+     * 根据描述获取 code
      *
      * @param desc 描述
-     * @return value
+     * @return code
      */
-    public static Integer getValueByDesc(String desc) {
+    public static Integer getCodeByDesc(String desc) {
         for (OrderStatusEnum e : values()) {
             if (e.getDesc().equals(desc)) {
-                return e.getValue();
+                return e.getCode();
             }
         }
         return null;
@@ -91,7 +91,7 @@ public enum OrderStatusEnum {
     public static Map<Integer, String> toMap() {
         Map<Integer, String> map = new HashMap<>(16);
         for (OrderStatusEnum e : values()) {
-            map.put(e.getValue(), e.getDesc());
+            map.put(e.getCode(), e.getDesc());
         }
         return map;
     }
@@ -101,9 +101,9 @@ public enum OrderStatusEnum {
      */
     public static List<Integer> unOutStockStatus() {
         return Lists.newArrayList(
-                CREATED.value,
-                PAID.value,
-                FULFILL.value
+                CREATED.code,
+                PAID.code,
+                FULFILL.code
         );
     }
 
@@ -112,10 +112,10 @@ public enum OrderStatusEnum {
      */
     public static List<Integer> canRemoveStatus() {
         return Lists.newArrayList(
-                SIGNED.value,
-                CANCELED.value,
-                REFUSED.value,
-                INVALID.value
+                SIGNED.code,
+                CANCELED.code,
+                REFUSED.code,
+                INVALID.code
         );
     }
 
