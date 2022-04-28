@@ -1,5 +1,7 @@
 package com.company.project.utils;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.company.project.model.PageResult;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -12,7 +14,45 @@ import java.util.List;
  */
 public class PageUtil {
 
+    private static final int DEFAULT_PAGE_SIZE = 20;
+
     private PageUtil() {
+    }
+
+    /**
+     * 转为统一分页结果返回
+     *
+     * @param currentPage 当前页码
+     * @param pageSize    每页大小
+     * @param data        分页数据
+     * @param total       总记录数
+     * @return 统一分页结果
+     */
+    public static <T> PageResult<T> toPage(Integer currentPage, Integer pageSize, List<T> data, Long total) {
+        PageResult<T> pageResult = new PageResult<>();
+        pageResult.setPageNum(currentPage);
+        pageResult.setPageSize(pageSize);
+        pageResult.setTotal(total);
+        pageResult.setList(data);
+        return pageResult;
+    }
+
+    /**
+     * 处理 Mybatis plus 分页查询结果包装成统一分页结果返回
+     *
+     * @param page Mybatis plus分页查询结果
+     * @return 统一分页结果
+     */
+    public static <T> PageResult<T> toPage(IPage<T> page) {
+        if (page == null) {
+            return null;
+        }
+        PageResult<T> pageResult = new PageResult<>();
+        pageResult.setPageNum((int) page.getCurrent());
+        pageResult.setPageSize((int) page.getSize());
+        pageResult.setTotal(page.getTotal());
+        pageResult.setList(page.getRecords());
+        return pageResult;
     }
 
     /**

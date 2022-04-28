@@ -19,34 +19,30 @@ public class BaseBizException extends RuntimeException {
 
     private String errorMsg;
 
-    public BaseBizException(String errorMsg) {
-        super(errorMsg);
-        this.errorCode = DEFAULT_ERROR_CODE;
-        this.errorMsg = errorMsg;
-    }
-
     public BaseBizException(Integer errorCode, String errorMsg) {
         super(errorMsg);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }
 
-    public BaseBizException(BaseCommonError baseCommonError) {
-        super(baseCommonError.getErrorMsg());
-        this.errorCode = baseCommonError.getErrorCode();
-        this.errorMsg = baseCommonError.getErrorMsg();
+    public BaseBizException(String errorMsg) {
+        this(DEFAULT_ERROR_CODE, errorMsg);
     }
 
     public BaseBizException(Integer errorCode, String errorMsg, Object... arguments) {
-        super(StrUtil.format(errorMsg, arguments));
-        this.errorCode = errorCode;
-        this.errorMsg = StrUtil.format(errorMsg, arguments);
+        this(errorCode, StrUtil.format(errorMsg, arguments));
+    }
+
+    public BaseBizException(BaseCommonError baseCommonError) {
+        this(baseCommonError.getErrorCode(), baseCommonError.getErrorMsg());
+    }
+
+    public BaseBizException(BaseCommonError baseCommonError, String errorMsg) {
+        this(baseCommonError.getErrorCode(), errorMsg);
     }
 
     public BaseBizException(BaseCommonError baseCommonError, Object... arguments) {
-        super(StrUtil.format(baseCommonError.getErrorMsg(), arguments));
-        this.errorCode = baseCommonError.getErrorCode();
-        this.errorMsg = StrUtil.format(baseCommonError.getErrorMsg(), arguments);
+        this(baseCommonError.getErrorCode(), StrUtil.format(baseCommonError.getErrorMsg(), arguments));
     }
 
     public Integer getErrorCode() {
