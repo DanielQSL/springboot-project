@@ -46,6 +46,10 @@ public class JsonUtil {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /**
+     * 默认时区
+     */
+    public static final String DEFAULT_TIME_ZONE = "Asia/Shanghai";
+    /**
      * 默认日期时间格式
      */
     public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -59,13 +63,11 @@ public class JsonUtil {
     public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
 
     static {
-        // 模组（Long转String）
-        OBJECT_MAPPER.registerModule(longToStringModule());
-        // 所有的日期格式都统一为以下的样式，即yyyy-MM-dd HH:mm:ss
-        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT));
         // 指定时区
-        OBJECT_MAPPER.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        // java8日期处理
+        OBJECT_MAPPER.setTimeZone(TimeZone.getTimeZone(DEFAULT_TIME_ZONE));
+        // 设置日期格式化
+        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT));
+        // Java8 日期处理
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)));
         javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)));
@@ -85,6 +87,8 @@ public class JsonUtil {
         // 取消java.util.Date, Calendar默认转换timestamps形式
         OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
+        // 模组（Long转String）
+        OBJECT_MAPPER.registerModule(longToStringModule());
         // 强制 JSON 空字符串("")转换为 null 对象值:
         OBJECT_MAPPER.disable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         // 在 JSON 中允许 C/C++ 样式的注释(非标准，默认禁用)
