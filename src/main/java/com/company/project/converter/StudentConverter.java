@@ -39,7 +39,7 @@ public interface StudentConverter {
      */
     @Mappings({
             @Mapping(source = "records", target = "list"),
-            @Mapping(source = "pages", target = "totalPage"),
+            @Mapping(source = "pages", target = "pages"),
             @Mapping(source = "current", target = "pageNum"),
             @Mapping(source = "size", target = "pageSize")
     })

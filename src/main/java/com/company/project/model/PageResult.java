@@ -27,7 +27,7 @@ public class PageResult<T> implements Serializable {
     /**
      * 总页数
      */
-    private Integer totalPage;
+    private Integer pages;
 
     /**
      * 总记录数
@@ -72,12 +72,12 @@ public class PageResult<T> implements Serializable {
         this.pageSize = pageSize;
     }
 
-    public Integer getTotalPage() {
-        return totalPage;
+    public Integer getPages() {
+        return pages;
     }
 
-    public void setTotalPage(Integer totalPage) {
-        this.totalPage = totalPage;
+    public void setPages(Integer pages) {
+        this.pages = pages;
     }
 
     public Long getTotal() {
@@ -101,7 +101,7 @@ public class PageResult<T> implements Serializable {
         return "PageResult{" +
                 "pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
-                ", totalPage=" + totalPage +
+                ", totalPage=" + pages +
                 ", total=" + total +
                 ", list=" + list +
                 '}';
