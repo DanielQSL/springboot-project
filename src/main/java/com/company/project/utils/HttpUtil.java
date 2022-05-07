@@ -31,10 +31,25 @@ public class HttpUtil {
     public static HttpServletRequest getCurrentRequest() {
         ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attrs == null) {
-            logger.debug("get current request failed");
+            logger.warn("get current request failed");
             return null;
         }
         return attrs.getRequest();
+    }
+
+    /**
+     * 根据请求头的key从当前Spring请求中获取请求头的值
+     *
+     * @param key 键
+     * @return 值
+     */
+    public static String getHeaderByKey(String key) {
+        HttpServletRequest request = getCurrentRequest();
+        if (request == null) {
+            logger.warn("get current request failed");
+            return null;
+        }
+        return request.getHeader(key);
     }
 
     /**
