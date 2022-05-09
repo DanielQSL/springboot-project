@@ -30,7 +30,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 /**
  * Jackson JSON工具类
@@ -252,6 +255,15 @@ public class JsonUtil {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        // json解析list嵌套
+        String jsonStr = "[[\"zhangsan\",\"lisi\"],[\"wangwu\"]]";
+        List<List<String>> list = JsonUtil.parseObjectCollection(jsonStr, new TypeReference<List<List<String>>>() {});
+        // 打平嵌套list
+        Set<String> set = list.stream().flatMap(List::stream).collect(Collectors.toSet());
+        System.out.println(set);
     }
 
 }
