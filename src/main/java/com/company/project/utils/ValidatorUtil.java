@@ -1,6 +1,5 @@
 package com.company.project.utils;
 
-import cn.hutool.core.lang.Assert;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.ConstraintViolation;
@@ -8,7 +7,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 
 /**
  * 参数校验工具类
@@ -42,7 +40,9 @@ public class ValidatorUtil {
      * 参数校验
      */
     public static <T> void validate(T object) {
-        Assert.notNull(object);
+        if (null == object) {
+            throw new IllegalArgumentException("this argument must not be null");
+        }
         Set<ConstraintViolation<T>> validates = getValidator().validate(object);
         if (CollectionUtils.isNotEmpty(validates)) {
             String message = validates.stream()

@@ -1,6 +1,6 @@
 package com.company.project.utils;
 
-import com.company.project.enums.EnvType;
+import com.qsl.project.base.enums.EnvTypeEnum;
 
 import java.net.InetAddress;
 
@@ -44,8 +44,7 @@ public class EnvUtil {
             return env;
         }
 
-        //此处为新增逻辑
-        // 4. Try to get environment from hostname
+        // 3. Try to get environment from hostname
         String hostname = "";
         try {
             hostname = InetAddress.getLocalHost().getHostName();
@@ -55,19 +54,19 @@ public class EnvUtil {
 
         if (hostname != null) {
             if (hostname.contains("-dev-")) {
-                return EnvType.DEV.getValue();
+                return EnvTypeEnum.DEV.getDesc();
             }
             if (hostname.contains("-qa-")) {
-                return EnvType.QA.getValue();
+                return EnvTypeEnum.QA.getDesc();
             }
             if (hostname.contains("-pl-")) {
-                return EnvType.PL.getValue();
+                return EnvTypeEnum.PL.getDesc();
             }
             if (hostname.contains("-online-")) {
-                return EnvType.ONLINE.getValue();
+                return EnvTypeEnum.ONLINE.getDesc();
             }
         }
-        return EnvType.DEV.getValue();
+        return EnvTypeEnum.DEV.getDesc();
     }
 
 }
