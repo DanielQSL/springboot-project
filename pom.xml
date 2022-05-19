@@ -16,6 +16,7 @@
 
     <properties>
         <!--   项目基础     -->
+        <revision>0.0.1-SNAPSHOT</revision>
         <java.version>1.8</java.version>
         <!--   以下这些在Spring-boot中已经定义，故可以省略     -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,6 +42,10 @@
     </properties>
 
     <dependencies>
+        <!-- ↓↓↓↓↓=============项目内部依赖=============↓↓↓↓↓ -->
+
+        <!-- ↑↑↑↑↑=============项目内部类依赖=============↑↑↑↑↑ -->
+
         <!-- ↓↓↓↓↓=============项目基础依赖=============↓↓↓↓↓ -->
         <dependency>
             <groupId>com.github.DanielQSL.project-demo</groupId>
@@ -123,7 +128,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.20</version>
+            <version>5.7.22</version>
         </dependency>
         <!-- ↑↑↑↑↑=============常用工具类依赖=============↑↑↑↑↑ -->
 
