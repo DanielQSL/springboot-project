@@ -2,6 +2,7 @@ package com.company.project.utils;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.company.project.model.PageResult;
+import com.github.pagehelper.PageInfo;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -53,6 +54,24 @@ public class PageUtil {
         pageResult.setTotal(page.getTotal());
         pageResult.setList(page.getRecords());
         return pageResult;
+    }
+
+    /**
+     * 处理 com.github.pagehelper 分页查询结果包装成统一分页结果返回
+     *
+     * @param page com.github.pagehelper分页查询结果
+     * @return 统一分页结果
+     */
+    public static <T> PageResult<T> toPage(PageInfo<T> page) {
+        if (page == null) {
+            return null;
+        }
+        PageResult<T> pageVo = new PageResult<>();
+        pageVo.setPageNum(page.getPageNum());
+        pageVo.setPageSize(page.getPageSize());
+        pageVo.setPages(page.getPages());
+        pageVo.setList(page.getList());
+        return pageVo;
     }
 
     /**
