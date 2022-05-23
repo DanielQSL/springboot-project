@@ -1,5 +1,6 @@
 package com.company.project.utils;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.company.project.model.PageResult;
 import com.github.pagehelper.PageInfo;
@@ -49,10 +50,11 @@ public class PageUtil {
             return null;
         }
         PageResult<T> pageResult = new PageResult<>();
-        pageResult.setPageNum((int) page.getCurrent());
-        pageResult.setPageSize((int) page.getSize());
+        pageResult.setPageNum(Math.toIntExact(page.getCurrent()));
+        pageResult.setPageSize(Math.toIntExact(page.getSize()));
+        pageResult.setPages(Math.toIntExact(page.getPages()));
         pageResult.setTotal(page.getTotal());
-        pageResult.setList(page.getRecords());
+        pageResult.setList(CollUtil.emptyIfNull(page.getRecords()));
         return pageResult;
     }
 
@@ -66,12 +68,13 @@ public class PageUtil {
         if (page == null) {
             return null;
         }
-        PageResult<T> pageVo = new PageResult<>();
-        pageVo.setPageNum(page.getPageNum());
-        pageVo.setPageSize(page.getPageSize());
-        pageVo.setPages(page.getPages());
-        pageVo.setList(page.getList());
-        return pageVo;
+        PageResult<T> pageResult = new PageResult<>();
+        pageResult.setPageNum(page.getPageNum());
+        pageResult.setPageSize(page.getPageSize());
+        pageResult.setPages(page.getPages());
+        pageResult.setTotal(page.getTotal());
+        pageResult.setList(page.getList());
+        return pageResult;
     }
 
     /**
