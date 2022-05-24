@@ -1,4 +1,4 @@
-package com.company.project.handler;
+package com.company.project.exception;
 
 import com.company.project.enums.ResponseCodeEnum;
 import com.company.project.exception.BusinessException;
