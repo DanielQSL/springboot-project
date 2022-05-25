@@ -42,9 +42,17 @@
     </properties>
 
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-dependencies</artifactId>-->
+<!--            <version>${spring-boot.version}</version>-->
+<!--            <type>pom</type>-->
+<!--            <scope>import</scope>-->
+<!--        </dependency>-->
+
         <!-- ↓↓↓↓↓=============项目内部依赖=============↓↓↓↓↓ -->
 
-        <!-- ↑↑↑↑↑=============项目内部类依赖=============↑↑↑↑↑ -->
+        <!-- ↑↑↑↑↑=============项目内部依赖=============↑↑↑↑↑ -->
 
         <!-- ↓↓↓↓↓=============项目基础依赖=============↓↓↓↓↓ -->
         <dependency>
@@ -111,6 +119,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.10.2</version>
         </dependency>
         <!-- 阿里 FastJson -->
         <dependency>
@@ -269,11 +282,6 @@
             <version>1.2.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.10.2</version>
-        </dependency>
         <!-- 参数校验 -->
         <dependency>
             <groupId>org.hibernate</groupId>
