@@ -18,9 +18,9 @@ public class CaffeineCacheConfig {
     @Bean("configCache")
     public Cache<String, Object> configCache() {
         return Caffeine.newBuilder()
-                // 写入数据后经过固定时间过期
+                // 最后一次写入后经过固定时间过期
                 .expireAfterWrite(60, TimeUnit.SECONDS)
-                // 最后一次访问数据后经过固定时间过期
+                // 最后一次写入或访问后经过固定时间过期
                 .expireAfterAccess(60, TimeUnit.SECONDS)
                 // 初始的缓存空间大小
                 .initialCapacity(200)
