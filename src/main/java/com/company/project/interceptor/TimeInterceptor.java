@@ -1,7 +1,6 @@
 package com.company.project.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2021/1/20
  */
 @Slf4j
-@Component
 public class TimeInterceptor implements HandlerInterceptor {
 
     @Override
