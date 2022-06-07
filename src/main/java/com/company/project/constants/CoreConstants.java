@@ -13,14 +13,15 @@ public interface CoreConstants {
     String DEFAULT_TIME_ZONE = "Asia/Shanghai";
 
     /**
-     * 统一的日期格式
-     */
-    String DATE_FORMAT_PATTERN = "yyyy-MM-dd";
-
-    /**
      * 统一的日期时间格式
      */
     String DATE_TIME_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
+
+    /**
+     * 统一的日期格式
+     */
+    String DATE_FORMAT_PATTERN = "yyyy-MM-dd";
 
     /**
      * 统一的时间格式

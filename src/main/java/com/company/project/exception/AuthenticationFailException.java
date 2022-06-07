@@ -1,7 +1,7 @@
 package com.company.project.exception;
 
 /**
- * 认证失败异常异常
+ * 认证失败异常
  *
  * @author DanielQSL
  */

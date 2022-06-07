@@ -3,7 +3,7 @@ spring:
     cache: true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/db_test?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&autoReconnect=true&serverTimezone=Asia/Shanghai&autoReconnect=true&rewriteBatchedStatements=true
+    url: jdbc:mysql://localhost:3306/db_test?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&rewriteBatchedStatements=true
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver

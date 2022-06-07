@@ -47,10 +47,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        // 添加映射路径
         registry.addMapping("/**")
+                // 放行哪些原始域
                 .allowedOrigins("*")
+                // 放行哪些头信息
                 .allowedHeaders("*")
+                // 是否发送Cookie信息
                 .allowCredentials(true)
+                // 放行哪些请求方式。可传 "*"
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS", "HEAD")
                 .maxAge(3600);
     }

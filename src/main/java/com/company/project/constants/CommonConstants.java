@@ -12,19 +12,19 @@ public final class CommonConstants {
     public static final String BASE_PACKAGE = "com.company.project";
 
     /**
-     * 可用状态（Y可用 、N不可用）
+     * 是否
      */
-    public interface Status {
-        String ENABLE = "Y";
-        String DISABLE = "N";
+    public interface YesOrNo {
+        Integer NO = 0;
+        Integer YES = 1;
     }
 
     /**
-     * 是否状态
+     * 可用状态（Y可用 、N不可用）
      */
-    public interface YesOrNoStatus {
-        Integer NO = 0;
-        Integer YES = 1;
+    public interface EnableStatus {
+        String ENABLE = "Y";
+        String DISABLE = "N";
     }
 
 }
