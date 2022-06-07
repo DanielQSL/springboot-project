@@ -87,9 +87,9 @@ public class JsonUtil {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         // 允许序列化空的POJO类(否则会抛出异常)
         OBJECT_MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
         // 取消java.util.Date, Calendar默认转换timestamps形式
         OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
         // 模组（Long转String）
         OBJECT_MAPPER.registerModule(longToStringModule());
         // 强制 JSON 空字符串("")转换为 null 对象值:
