@@ -32,7 +32,7 @@
         <!--        <spring-boot-2.5.x>2.5.9</spring-boot-2.5.x>-->
 
         <!--   内部依赖     -->
-        <project-base.version>1.3.2</project-base.version>
+        <project-base.version>1.4.0</project-base.version>
 
         <!--   第三方依赖     -->
         <log4j2.version>2.17.1</log4j2.version>
@@ -41,15 +41,19 @@
         <commons-dbutils.version>1.7</commons-dbutils.version>
     </properties>
 
-    <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-dependencies</artifactId>-->
-<!--            <version>${spring-boot.version}</version>-->
-<!--            <type>pom</type>-->
-<!--            <scope>import</scope>-->
-<!--        </dependency>-->
+<!--    <dependencyManagement>-->
+<!--        <dependencies>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-dependencies</artifactId>-->
+<!--                <version>${spring-boot.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
 
+    <dependencies>
         <!-- ↓↓↓↓↓=============项目内部依赖=============↓↓↓↓↓ -->
 
         <!-- ↑↑↑↑↑=============项目内部依赖=============↑↑↑↑↑ -->
