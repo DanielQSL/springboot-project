@@ -1,7 +1,9 @@
 package com.company.project.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigService;
+import com.ctrip.framework.apollo.core.ConfigConsts;
 
 /**
  * Apollo工具类
@@ -18,13 +20,12 @@ public class ApolloUtil {
         return config.getProperty(key, defaultValue);
     }
 
+    public static String getProperty(String key) {
+        return getProperty(key, null);
+    }
+
     public static String getProperty(String namespace, String key, String defaultValue) {
-        Config config = ConfigService.getAppConfig();
-        String val = config.getProperty(key, defaultValue);
-        if (!val.equals(defaultValue)) {
-            return val;
-        }
-        config = ConfigService.getConfig(namespace);
+        Config config = ConfigService.getConfig(StrUtil.blankToDefault(namespace, ConfigConsts.NAMESPACE_APPLICATION));
         return config.getProperty(key, defaultValue);
     }
 
