@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
  */
 public class ValidatorUtil {
 
-    private static volatile Validator validator;
-
     private ValidatorUtil() {
+    }
+
+    private static class ValidatorHolder {
+        private static final Validator INSTANCE = Validation.buildDefaultValidatorFactory().getValidator();
     }
 
     /**
@@ -26,14 +28,7 @@ public class ValidatorUtil {
      * @return 验证器
      */
     private static Validator getValidator() {
-        if (validator == null) {
-            synchronized (ValidatorUtil.class) {
-                if (validator == null) {
-                    validator = Validation.buildDefaultValidatorFactory().getValidator();
-                }
-            }
-        }
-        return validator;
+        return ValidatorHolder.INSTANCE;
     }
 
     /**
