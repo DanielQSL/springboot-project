@@ -19,7 +19,7 @@ public class SoaUtil {
     private final static Integer ERROR_CODE = ResponseCodeEnum.ERROR.getErrorCode();
     private final static String ERROR_MESSAGE = ResponseCodeEnum.ERROR.getErrorMsg();
 
-    public static <T, E> SoaResponse<T, E> ok(String returnMsg, T data) {
+    public static <T, E> SoaResponse<T, E> success(String returnMsg, T data) {
         SoaResponse<T, E> soaResponse = new SoaResponse<>();
         soaResponse.setCode(SUCCESS_CODE);
         soaResponse.setMsg(returnMsg);
@@ -27,8 +27,8 @@ public class SoaUtil {
         return soaResponse;
     }
 
-    public static <T, E> SoaResponse<T, E> ok(T data) {
-        return ok(SUCCESS_MESSAGE, data);
+    public static <T, E> SoaResponse<T, E> success(T data) {
+        return success(SUCCESS_MESSAGE, data);
     }
 
     public static <T, E> SoaResponse<T, E> error(Integer returnCode, String returnMsg, T data) {
@@ -84,6 +84,9 @@ public class SoaUtil {
     }
 
     public static <T> T unpack(SoaResponse<T, ?> soaResponse) {
+        if (null == soaResponse) {
+            throw new SoaException(ResponseCodeEnum.RPC_RETURN_NULL.getErrorCode(), ResponseCodeEnum.RPC_RETURN_NULL.getErrorMsg());
+        }
         if (!SUCCESS_CODE.equals(soaResponse.getCode())) {
             throw new SoaException(soaResponse.getCode(), soaResponse.getMsg());
         }
@@ -91,11 +94,14 @@ public class SoaUtil {
     }
 
     public static <T> T unpackNotNull(SoaResponse<T, ?> soaResponse) {
+        if (null == soaResponse) {
+            throw new SoaException(ResponseCodeEnum.RPC_RETURN_NULL.getErrorCode(), ResponseCodeEnum.RPC_RETURN_NULL.getErrorMsg());
+        }
         if (!SUCCESS_CODE.equals(soaResponse.getCode())) {
             throw new SoaException(soaResponse.getCode(), soaResponse.getMsg());
         }
         if (null == soaResponse.getData()) {
-            throw new SoaException(ResponseCodeEnum.RPC_RETURN_NULL.getErrorCode(), ResponseCodeEnum.RPC_RETURN_NULL.getErrorMsg());
+            throw new SoaException(ResponseCodeEnum.RPC_RETURN_DATA_NULL.getErrorCode(), ResponseCodeEnum.RPC_RETURN_DATA_NULL.getErrorMsg());
         }
         return soaResponse.getData();
     }
