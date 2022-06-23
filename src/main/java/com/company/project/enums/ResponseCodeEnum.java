@@ -83,6 +83,14 @@ public enum ResponseCodeEnum implements BaseCommonError {
      */
     CLIENT_REQUEST_PARAM_REQUIRED_ERROR(1006, "客户端请求缺少必填的参数"),
 
+    // =========== 服务端异常 =========
+
+    /**
+     * 通用的业务方法入参检查错误
+     * java.lang.IllegalArgumentException
+     */
+    SERVER_ILLEGAL_ARGUMENT_ERROR(2001, "业务方法参数检查不通过"),
+
     // ========== 系统错误段[10000~99999] ==========
 
     SYSTEM_TIMEOUT(10001, "系统执行超时"),
