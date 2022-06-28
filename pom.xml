@@ -308,6 +308,7 @@
     </dependencies>
 
     <repositories>
+        <!-- jitpack个人私服 -->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -323,6 +324,12 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </repository>
+        <!-- 使用 aliyun 的 Maven 源，提升下载速度 -->
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
         </repository>
     </repositories>
 
