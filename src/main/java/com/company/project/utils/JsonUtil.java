@@ -20,8 +20,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
@@ -43,8 +41,6 @@ import java.util.stream.Collectors;
  * @author DanielQSL
  */
 public class JsonUtil {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -132,13 +128,12 @@ public class JsonUtil {
      */
     public static <T> String toJsonString(T obj) {
         if (obj == null) {
-            return null;
+            throw new NullPointerException();
         }
         try {
             return obj instanceof String ? (String) obj : OBJECT_MAPPER.writeValueAsString(obj);
         } catch (Exception e) {
-            LOGGER.error("Parse Object to String error", e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -150,13 +145,12 @@ public class JsonUtil {
      */
     public static <T> String toJsonStringPretty(T obj) {
         if (obj == null) {
-            return null;
+            throw new NullPointerException();
         }
         try {
             return obj instanceof String ? (String) obj : OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (Exception e) {
-            LOGGER.error("Parse Object to Pretty String error", e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -170,13 +164,12 @@ public class JsonUtil {
     @SuppressWarnings("unchecked")
     public static <T> T parseObject(String str, Class<T> clazz) {
         if (StringUtils.isEmpty(str) || clazz == null) {
-            return null;
+            throw new NullPointerException();
         }
         try {
             return clazz.equals(String.class) ? (T) str : OBJECT_MAPPER.readValue(str, clazz);
         } catch (Exception e) {
-            LOGGER.error("Parse String to Object error", e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -205,8 +198,7 @@ public class JsonUtil {
         try {
             return OBJECT_MAPPER.readValue(str, javaType);
         } catch (Exception e) {
-            LOGGER.error("Parse String to Collection error", e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -220,13 +212,12 @@ public class JsonUtil {
     @SuppressWarnings("unchecked")
     public static <T> T parseObjectCollection(String str, TypeReference<T> typeReference) {
         if (StringUtils.isEmpty(str) || typeReference == null) {
-            return null;
+            throw new NullPointerException();
         }
         try {
             return (T) (typeReference.getType().equals(String.class) ? str : OBJECT_MAPPER.readValue(str, typeReference));
         } catch (Exception e) {
-            LOGGER.error("Parse String to Collection error", e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
