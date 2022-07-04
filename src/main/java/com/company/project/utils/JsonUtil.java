@@ -128,7 +128,7 @@ public class JsonUtil {
      */
     public static <T> String toJsonString(T obj) {
         if (obj == null) {
-            throw new NullPointerException();
+            return null;
         }
         try {
             return obj instanceof String ? (String) obj : OBJECT_MAPPER.writeValueAsString(obj);
@@ -145,7 +145,7 @@ public class JsonUtil {
      */
     public static <T> String toJsonStringPretty(T obj) {
         if (obj == null) {
-            throw new NullPointerException();
+            return null;
         }
         try {
             return obj instanceof String ? (String) obj : OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
@@ -163,7 +163,10 @@ public class JsonUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> T parseObject(String str, Class<T> clazz) {
-        if (StringUtils.isEmpty(str) || clazz == null) {
+        if (StringUtils.isEmpty(str)) {
+            return null;
+        }
+        if (clazz == null) {
             throw new NullPointerException();
         }
         try {
@@ -211,7 +214,10 @@ public class JsonUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> T parseObjectCollection(String str, TypeReference<T> typeReference) {
-        if (StringUtils.isEmpty(str) || typeReference == null) {
+        if (StringUtils.isEmpty(str)) {
+            return null;
+        }
+        if (typeReference == null) {
             throw new NullPointerException();
         }
         try {
@@ -251,7 +257,8 @@ public class JsonUtil {
     public static void main(String[] args) {
         // json解析list嵌套
         String jsonStr = "[[\"zhangsan\",\"lisi\"],[\"wangwu\"]]";
-        List<List<String>> list = JsonUtil.parseObjectCollection(jsonStr, new TypeReference<List<List<String>>>() {});
+        List<List<String>> list = JsonUtil.parseObjectCollection(jsonStr, new TypeReference<List<List<String>>>() {
+        });
         // 打平嵌套list
         Set<String> set = list.stream().flatMap(List::stream).collect(Collectors.toSet());
         System.out.println(set);
