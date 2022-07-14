@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -36,22 +37,23 @@ public class ThreadPoolConfig {
                 new ThreadPoolExecutor.AbortPolicy());
     }
 
-//    /**
-//     * 第二种创建线程池方法：Spring中ThreadPoolTaskExecutor
-//     *
-//     * @return
-//     */
-//    @Bean("taskExecutor")
-//    public Executor taskExecutor() {
-//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-//        executor.setCorePoolSize(threadPoolProperties.getCorePoolSize());
-//        executor.setMaxPoolSize(threadPoolProperties.getMaxPoolSize());
-//        executor.setQueueCapacity(threadPoolProperties.getQueueCapacity());
-//        executor.setKeepAliveSeconds((int) threadPoolProperties.getKeepAliveSeconds());
-//        executor.setThreadNamePrefix(threadPoolProperties.getPrefix());
-//        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
-//        executor.initialize();
-//        return executor;
-//    }
+    /**
+     * 第二种创建线程池方法：Spring中ThreadPoolTaskExecutor
+     */
+    @Bean("taskExecutor")
+    public ThreadPoolTaskExecutor taskExecutor(ThreadPoolProperties threadPoolProperties) {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(threadPoolProperties.getCorePoolSize());
+        executor.setMaxPoolSize(threadPoolProperties.getMaxPoolSize());
+        executor.setQueueCapacity(threadPoolProperties.getQueueCapacity());
+        executor.setKeepAliveSeconds((int) threadPoolProperties.getKeepAliveSeconds());
+        executor.setThreadNamePrefix(threadPoolProperties.getPrefix());
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+        // 优雅关闭设置
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        executor.setAwaitTerminationSeconds(30);
+        executor.initialize();
+        return executor;
+    }
 
 }
