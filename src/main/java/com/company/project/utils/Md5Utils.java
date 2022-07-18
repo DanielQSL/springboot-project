@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 
 /**
  * 计算MD5值
+ * 替换 hutool 下的 DigestUtil.md5Hex(new File(""));
  *
  * @author DanieQSL
  */
