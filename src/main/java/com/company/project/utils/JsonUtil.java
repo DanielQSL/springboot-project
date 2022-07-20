@@ -19,7 +19,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
@@ -163,7 +163,7 @@ public class JsonUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> T parseObject(String str, Class<T> clazz) {
-        if (StringUtils.isEmpty(str)) {
+        if (!StringUtils.hasText(str)) {
             return null;
         }
         if (clazz == null) {
@@ -214,7 +214,7 @@ public class JsonUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> T parseObjectCollection(String str, TypeReference<T> typeReference) {
-        if (StringUtils.isEmpty(str)) {
+        if (!StringUtils.hasText(str)) {
             return null;
         }
         if (typeReference == null) {
