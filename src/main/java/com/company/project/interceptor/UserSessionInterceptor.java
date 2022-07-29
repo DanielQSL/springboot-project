@@ -1,12 +1,11 @@
 package com.company.project.interceptor;
 
 import cn.hutool.core.util.IdUtil;
-import com.alibaba.fastjson.JSON;
 import com.company.project.context.UserContext;
 import com.company.project.context.UserContextHolder;
 import com.company.project.enums.ResponseCodeEnum;
 import com.company.project.model.CommonResponse;
-import com.company.project.utils.WebUtils;
+import com.company.project.utils.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -66,13 +65,13 @@ public class UserSessionInterceptor implements HandlerInterceptor {
         String userToken = this.getToken(request);
 
         if (StringUtils.isBlank(userToken)) {
-            WebUtils.generateResponse(response, JSON.toJSONString(CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED)));
+            WebUtil.write2Response(response, CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED));
             return false;
         }
         // 缓存中获取用户信息
         UserContext userInfo = (UserContext) redisTemplate.opsForValue().get(USER_INFO_CACHE_PREFIX + userToken);
         if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {
-            WebUtils.generateResponse(response, JSON.toJSONString(CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED)));
+            WebUtil.write2Response(response, CommonResponse.fail(ResponseCodeEnum.UNAUTHORIZED));
             return false;
         }
         // 设置UserThreadLocal

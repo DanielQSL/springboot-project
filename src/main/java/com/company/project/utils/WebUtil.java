@@ -7,19 +7,23 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
- * Http工具类
+ * Web工具类
  *
  * @author DanielQSL
  */
-public class HttpUtil {
+public class WebUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebUtil.class);
 
     public static final String USER_TOKEN = "user-token";
 
-    private HttpUtil() {
+    private WebUtil() {
 
     }
 
@@ -35,6 +39,36 @@ public class HttpUtil {
             return null;
         }
         return attrs.getRequest();
+    }
+
+    /**
+     * 从Spring请求上下文中获取当前HttpServletResponse
+     *
+     * @return HttpServletResponse
+     */
+    public static HttpServletResponse getCurrentResponse() {
+        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attrs == null) {
+            logger.warn("get current response failed");
+            return null;
+        }
+        return attrs.getResponse();
+    }
+
+    /**
+     * 生成响应结果
+     *
+     * @param response HttpServletResponse
+     * @param obj      信息
+     * @throws IOException IO异常
+     */
+    public static void write2Response(HttpServletResponse response, Object obj)
+            throws IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        try (OutputStream out = response.getOutputStream()) {
+            out.write(JsonUtil.toJsonString(obj).getBytes(StandardCharsets.UTF_8));
+            out.flush();
+        }
     }
 
     /**
