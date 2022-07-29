@@ -141,6 +141,7 @@ public enum ResponseCodeEnum implements BaseCommonError {
     RPC_SERVICE_NOT_REGISTER(30003, "RPC服务未注册"),
     RPC_SERVICE_TIMEOUT(30004, "RPC执行超时"),
     RPC_RETURN_NULL(30005, "RPC返回响应为空"),
+    RPC_RETURN_DATA_NULL(30006, "RPC返回响应的数据为空"),
 
     ;
 

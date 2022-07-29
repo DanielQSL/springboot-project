@@ -9,6 +9,8 @@ import com.company.project.model.BaseCommonError;
  */
 public class BaseBizException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 默认错误码
      */
