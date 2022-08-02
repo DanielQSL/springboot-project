@@ -1,6 +1,5 @@
 package com.company.project.exception;
 
-import cn.hutool.core.util.StrUtil;
 import com.company.project.model.BaseCommonError;
 
 /**
@@ -9,6 +8,8 @@ import com.company.project.model.BaseCommonError;
  * @author DanielQSL
  */
 public class BaseBizException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 默认错误码
@@ -30,7 +31,7 @@ public class BaseBizException extends RuntimeException {
     }
 
     public BaseBizException(Integer errorCode, String errorMsg, Object... arguments) {
-        this(errorCode, StrUtil.format(errorMsg, arguments));
+        this(errorCode, String.format(errorMsg, arguments));
     }
 
     public BaseBizException(BaseCommonError baseCommonError) {
@@ -42,7 +43,7 @@ public class BaseBizException extends RuntimeException {
     }
 
     public BaseBizException(BaseCommonError baseCommonError, Object... arguments) {
-        this(baseCommonError.getErrorCode(), StrUtil.format(baseCommonError.getErrorMsg(), arguments));
+        this(baseCommonError.getErrorCode(), String.format(baseCommonError.getErrorMsg(), arguments));
     }
 
     public Integer getErrorCode() {

@@ -63,6 +63,8 @@ public class MybatisPlusConfig {
                 String name = "";
                 this.strictInsertFill(metaObject, CREATE_USER, String.class, name);
                 this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
+                this.strictInsertFill(metaObject, UPDATE_USER, String.class, name);
+                this.strictInsertFill(metaObject, UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
             }
 
             @Override

@@ -27,10 +27,6 @@ public enum ResponseCodeEnum implements BaseCommonError {
      */
     ERROR(-1, "系统未知错误"),
 
-    // ========== 服务端错误段 ==========
-
-    INTERNAL_SERVER_ERROR(500, "系统异常"),
-
     // ========== 客户端错误段 ==========
 
     BAD_REQUEST(400, "请求参数不正确"),
@@ -83,7 +79,9 @@ public enum ResponseCodeEnum implements BaseCommonError {
      */
     CLIENT_REQUEST_PARAM_REQUIRED_ERROR(1006, "客户端请求缺少必填的参数"),
 
-    // =========== 服务端异常 =========
+    // ========== 服务端错误段 ==========
+
+    INTERNAL_SERVER_ERROR(500, "系统异常"),
 
     /**
      * 通用的业务方法入参检查错误
@@ -143,6 +141,7 @@ public enum ResponseCodeEnum implements BaseCommonError {
     RPC_SERVICE_NOT_REGISTER(30003, "RPC服务未注册"),
     RPC_SERVICE_TIMEOUT(30004, "RPC执行超时"),
     RPC_RETURN_NULL(30005, "RPC返回响应为空"),
+    RPC_RETURN_DATA_NULL(30006, "RPC返回响应的数据为空"),
 
     ;
 
