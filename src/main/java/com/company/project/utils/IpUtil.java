@@ -1,9 +1,11 @@
 package com.company.project.utils;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -11,10 +13,13 @@ import java.util.regex.Pattern;
  *
  * @author DanielQSL
  */
-@Slf4j
 public class IpUtil {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(IpUtil.class);
+
     private static final String IPV4_REGEX = "(((\\d{1,2})|(1\\d{1,2})|(2[0-4]\\d)|(25[0-5]))\\.){3}((\\d{1,2})|(1\\d{1,2})|(2[0-4]\\d)|(25[0-5]))";
+
+    private static final String UNKNOWN = "unknown";
 
     private IpUtil() {
 
@@ -37,56 +42,32 @@ public class IpUtil {
      * @return IP地址
      */
     public static String getIpAddress(HttpServletRequest request) {
-        // 自定义：Header x-user-ip 记录PC，M站用户real-ip
-        if (StringUtils.isNotBlank(request.getHeader("x-user-ip"))) {
-            return request.getHeader("x-user-ip");
+        if (Objects.isNull(request)) {
+            return StringUtils.EMPTY;
         }
-        // Header x-real-ip 记录app用户
-        if (StringUtils.isNotBlank(request.getHeader("x-real-ip"))) {
-            return request.getHeader("x-real-ip");
+        String ip;
+        // 自定义：Header x-user-ip 记录PC用户ip
+        ip = request.getHeader("x-user-ip");
+        if (StringUtils.isNotBlank(ip) && !UNKNOWN.equalsIgnoreCase(ip)) {
+            return ip;
         }
-        // Header x-forwarded-for 记录多层代理服务器ip
-        if (StringUtils.isNotBlank(request.getHeader("x-forwarded-for"))) {
-            return request.getHeader("x-forwarded-for");
+        // Header x-real-ip 记录app用户ip
+        ip = request.getHeader("x-real-ip");
+        if (StringUtils.isNotBlank(ip) && !UNKNOWN.equalsIgnoreCase(ip)) {
+            return ip;
         }
-        // Header remoteip 记录远程连接地址
-        if (StringUtils.isNotBlank(request.getHeader("remoteip"))) {
-            return request.getHeader("remoteip");
+        // Header x-forwarded-for 记录多层代理服务器ip，值并不止一个，而是一串IP地址。如 x-forwarded-for: client, proxy1, proxy2
+        ip = request.getHeader("x-forwarded-for");
+        if (StringUtils.isNotBlank(ip) && !UNKNOWN.equalsIgnoreCase(ip)) {
+            return ip;
         }
-        log.error("get ip from HttpServletRequest Header is null");
+        // Header request.getRemoteAddr() 若使用Nginx等反向代理软件，则不能通过此方法获取IP地址
+        ip = request.getRemoteAddr();
+        if (StringUtils.isNotBlank(ip) && !UNKNOWN.equalsIgnoreCase(ip)) {
+            return ip;
+        }
+        LOGGER.error("Get IP from HttpServletRequest Header failed");
         return StringUtils.EMPTY;
-    }
-
-    /**
-     * 获取IP地址
-     * <p>
-     * 使用Nginx等反向代理软件， 则不能通过request.getRemoteAddr()获取IP地址
-     * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，X-Forwarded-For中第一个非unknown的有效IP字符串，则为真实IP地址
-     */
-    public static String getIpAddr(HttpServletRequest request) {
-        String unknown = "unknown";
-        String ip = null;
-        try {
-            ip = request.getHeader("x-forwarded-for");
-            if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
-                ip = request.getHeader("Proxy-Client-IP");
-            }
-            if (StringUtils.isEmpty(ip) || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
-                ip = request.getHeader("WL-Proxy-Client-IP");
-            }
-            if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
-                ip = request.getHeader("HTTP_CLIENT_IP");
-            }
-            if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
-                ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-            }
-            if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
-                ip = request.getRemoteAddr();
-            }
-        } catch (Exception e) {
-            log.error("IpUtil#getIpAddr error ", e);
-        }
-        return ip;
     }
 
     // =========在保存IPv4地址时，一个IPv4最小需要7个字符，最大需要15个字符，而使用无符号整数来存储，只需要4个字节即可。============
@@ -112,12 +93,10 @@ public class IpUtil {
      * @return long值对应的字符串
      */
     public static String long2Ip(long ipLong) {
-        StringBuilder ip = new StringBuilder();
-        ip.append(ipLong >>> 24).append(".");
-        ip.append((ipLong >>> 16) & 0xFF).append(".");
-        ip.append((ipLong >>> 8) & 0xFF).append(".");
-        ip.append(ipLong & 0xFF);
-        return ip.toString();
+        return (ipLong >>> 24) + "." +
+                ((ipLong >>> 16) & 0xFF) + "." +
+                ((ipLong >>> 8) & 0xFF) + "." +
+                (ipLong & 0xFF);
     }
 
     public static void main(String[] args) {
