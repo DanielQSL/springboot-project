@@ -69,10 +69,8 @@ public class BeanCopyUtil {
         if (target == null) {
             return null;
         }
-        try {
-            doTargetAfter.call(target);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (doTargetAfter != null) {
+            doTargetAfter.callWithRuntimeException(target);
         }
         return target;
     }
