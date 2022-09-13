@@ -99,6 +99,23 @@ public class RandomUtil {
         return sb.toString();
     }
 
+    private static final String ALL_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    /**
+     * 生成指定长度的随机字符串
+     *
+     * @param len 指定长度
+     * @return 随机字符串
+     */
+    public static String genRandomNumberStr(int len) {
+        Random random = new Random();
+        StringBuilder saltString = new StringBuilder(len);
+        for (int i = 1; i <= len; ++i) {
+            saltString.append(ALL_CHARS.charAt(random.nextInt(ALL_CHARS.length())));
+        }
+        return saltString.toString();
+    }
+
     public static void main(String[] args) {
         System.out.println(genNum(2, 4));    // 3
         System.out.println(genNumIncludeMin(2, 4));    // 2,3中随机一个数
