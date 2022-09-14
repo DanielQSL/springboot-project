@@ -1,11 +1,12 @@
 package com.company.project.utils;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -13,7 +14,6 @@ import java.util.Objects;
  *
  * @author DanielQSL
  */
-@Slf4j
 @Component
 public class SpringContextUtil implements ApplicationContextAware {
 
@@ -21,8 +21,8 @@ public class SpringContextUtil implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
-        if (Objects.isNull(SpringContextUtil.applicationContext)) {
-            SpringContextUtil.applicationContext = context;
+        if (Objects.isNull(applicationContext)) {
+            applicationContext = context;
         }
     }
 
@@ -32,7 +32,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return 应用上下文
      */
     public static ApplicationContext getApplicationContext() {
-        return SpringContextUtil.applicationContext;
+        return applicationContext;
     }
 
     /**
@@ -42,7 +42,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return Bean对象
      */
     public static Object getBean(String name) {
-        return getApplicationContext().getBean(name);
+        return applicationContext.getBean(name);
     }
 
     /**
@@ -53,7 +53,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return Bean对象
      */
     public static <T> T getBean(Class<T> clazz) {
-        return getApplicationContext().getBean(clazz);
+        return applicationContext.getBean(clazz);
     }
 
     /**
@@ -65,7 +65,18 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return Bean对象
      */
     public static <T> T getBean(String name, Class<T> clazz) {
-        return getApplicationContext().getBean(name, clazz);
+        return applicationContext.getBean(name, clazz);
+    }
+
+    /**
+     * 通过 class获取所有 Bean
+     *
+     * @param clazz 类型
+     * @param <T>   类型
+     * @return Bean对象集合
+     */
+    public static <T> Map<String, T> getBeansOfType(Class<T> clazz) {
+        return applicationContext.getBeansOfType(clazz);
     }
 
     /**
@@ -75,7 +86,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return 是否存在
      */
     public static boolean containsBean(String name) {
-        return getApplicationContext().containsBean(name);
+        return applicationContext.containsBean(name);
     }
 
     /**
@@ -96,6 +107,13 @@ public class SpringContextUtil implements ApplicationContextAware {
      */
     public static Class<?> getType(String name) {
         return applicationContext.getType(name);
+    }
+
+    /**
+     * 获取环境信息
+     */
+    public static Environment getEnvironment() {
+        return applicationContext.getEnvironment();
     }
 
 }
