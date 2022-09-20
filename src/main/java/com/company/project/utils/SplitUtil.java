@@ -2,15 +2,71 @@ package com.company.project.utils;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * 拆分集合工具类
+ * 拆分工具类
  *
  * @author DanielQSL
  */
-public class SplitListUtil {
+public class SplitUtil {
+
+    /**
+     * 自定义字符串分割，返回全部
+     * tips: 相比原生 String.split放弃正则，减少数据转换处理
+     *
+     * @param str            待分割的字符串
+     * @param separatorChars 分隔符
+     * @return 分割后的返回结果
+     */
+    public static List<String> split(String str, final String separatorChars) {
+        if (null == str) {
+            return Collections.emptyList();
+        }
+
+        if (StringUtils.isEmpty(separatorChars)) {
+            return Collections.singletonList(str);
+        }
+
+        final List<String> strList = new ArrayList<>();
+        while (true) {
+            int index = str.indexOf(separatorChars);
+            if (index < 0) {
+                strList.add(str);
+                break;
+            }
+            strList.add(str.substring(0, index));
+            str = str.substring(index + separatorChars.length());
+        }
+        return strList;
+    }
+
+    /**
+     * 自定义字符串分割，返回第一个
+     *
+     * @param str            待分割的字符串
+     * @param separatorChars 分隔符
+     * @return 分割后的第一个字符串
+     */
+    public static String splitFirst(final String str, final String separatorChars) {
+        if (null == str || StringUtils.isEmpty(separatorChars)) {
+            return str;
+        }
+
+        int index = str.indexOf(separatorChars);
+        if (index < 0) {
+            return str;
+        }
+        if (index == 0) {
+            // 一开始就是分隔符，返回空串
+            return StringUtils.EMPTY;
+        }
+        return str.substring(0, index);
+    }
 
     /**
      * 拆分集合
@@ -19,8 +75,7 @@ public class SplitListUtil {
      * @param resList       需要拆分的集合
      * @param subListLength 每个子集合的元素个数
      * @return 返回拆分后的各个集合组成的列表
-     * 代码里面用到了guava和common的结合工具类
-     **/
+     */
     public static <T> List<List<T>> split(List<T> resList, int subListLength) {
         if (CollectionUtils.isEmpty(resList) || subListLength <= 0) {
             return Lists.newArrayList();
@@ -53,7 +108,6 @@ public class SplitListUtil {
         return ret;
     }
 
-    // 运行代码
     public static void main(String[] args) {
         List<String> list = Lists.newArrayList();
         int size = 1099;

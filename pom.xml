@@ -304,6 +304,12 @@
             <artifactId>commons-dbutils</artifactId>
             <version>${commons-dbutils.version}</version>
         </dependency>
+        <!-- 堆外内存 -->
+        <dependency>
+            <groupId>org.caffinitas.ohc</groupId>
+            <artifactId>ohc-core</artifactId>
+            <version>0.7.4</version>
+        </dependency>
         <!-- ↑↑↑↑↑=============第三方依赖=============↑↑↑↑↑ -->
     </dependencies>
 
