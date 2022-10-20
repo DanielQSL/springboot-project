@@ -60,10 +60,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
+    /**
+     * 设置静态资源映射
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // swagger-bootstrap-ui
-        registry.addResourceHandler("swagger-ui.html")
+        // swagger-ui
+        registry.addResourceHandler("swagger-ui.html", "doc.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
