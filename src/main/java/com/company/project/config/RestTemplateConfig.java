@@ -5,8 +5,12 @@ import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.ssl.SSLContexts;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -19,8 +23,11 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.Charset;
+import javax.net.ssl.SSLContext;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,7 +46,7 @@ public class RestTemplateConfig {
      */
     @Primary
     @Bean
-    public RestTemplate restTemplate() {
+    public RestTemplate restTemplate() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         RequestConfig requestConfig = RequestConfig.custom()
                 // 设置客户端和服务端建立连接的超时时间
                 .setConnectTimeout(5_000)
@@ -61,6 +68,8 @@ public class RestTemplateConfig {
         HttpClient httpClient = HttpClientBuilder.create()
                 .setDefaultRequestConfig(requestConfig)
                 .setConnectionManager(poolingConnectionManager)
+                // 支持https
+                .setSSLSocketFactory(getSslConnectionSocketFactory())
                 .build();
 
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
@@ -76,6 +85,17 @@ public class RestTemplateConfig {
     }
 
     /**
+     * 支持SSL
+     *
+     * @return SSLConnectionSocketFactory
+     */
+    private static SSLConnectionSocketFactory getSslConnectionSocketFactory() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+        TrustStrategy acceptingTrustStrategy = (x509Certificates, s) -> true;
+        SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+        return new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
+    }
+
+    /**
      * 基于OkHttp3配置RestTemplate
      *
      * @return RestTemplate
@@ -86,10 +106,10 @@ public class RestTemplateConfig {
         ConnectionPool connectionPool = new ConnectionPool(200, 10, TimeUnit.SECONDS);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder().connectionPool(connectionPool)
-                        .connectTimeout(5, TimeUnit.SECONDS)
-                        .readTimeout(5, TimeUnit.SECONDS)
-                        .writeTimeout(3, TimeUnit.SECONDS)
-                        .retryOnConnectionFailure(false).build();
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(3, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false).build();
 
         ClientHttpRequestFactory requestFactory = new OkHttp3ClientHttpRequestFactory(okHttpClient);
 
