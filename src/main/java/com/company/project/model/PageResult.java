@@ -15,12 +15,12 @@ public class PageResult<T> implements Serializable {
     /**
      * 当前页
      */
-    private Integer pageNum;
+    private Integer pageNum = 1;
 
     /**
      * 每页的数量
      */
-    private Integer pageSize;
+    private Integer pageSize = 10;
 
     /**
      * 总页数

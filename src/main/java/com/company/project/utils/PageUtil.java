@@ -6,6 +6,8 @@ import com.company.project.model.PageResult;
 import com.github.pagehelper.PageInfo;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,9 +18,22 @@ import java.util.List;
  */
 public class PageUtil {
 
-    private static final int DEFAULT_PAGE_SIZE = 20;
+    private static final int DEFAULT_PAGE_SIZE = 10;
 
     private PageUtil() {
+    }
+
+    /**
+     * 返回空页
+     */
+    public static <T> PageResult<T> emptyPage() {
+        PageResult<T> pageResult = new PageResult<>();
+        pageResult.setPageNum(1);
+        pageResult.setPageSize(DEFAULT_PAGE_SIZE);
+        pageResult.setPages(0);
+        pageResult.setTotal(0L);
+        pageResult.setList(Collections.emptyList());
+        return pageResult;
     }
 
     /**
@@ -125,6 +140,32 @@ public class PageUtil {
             toIndex = count;
         }
         return list.subList(fromIndex, toIndex);
+    }
+
+    /**
+     * 内存分页
+     */
+    public static <T> PageResult<T> page(List<T> sources, int pageNum, int pageSize, Comparator<T> comparator) {
+        if (CollectionUtils.isEmpty(sources)) {
+            return emptyPage();
+        }
+        if (null != comparator) {
+            sources.sort(comparator);
+        }
+        int start = Math.max((pageNum - 1) * pageSize, 0);
+        List<T> subList = sources.subList(Math.min(start, sources.size()), Math.min(start + pageSize, sources.size()));
+
+        PageResult<T> pageInfo = new PageResult<>();
+        pageInfo.setPages(totalPage(sources.size(), pageSize));
+        pageInfo.setTotal((long) sources.size());
+        pageInfo.setPageSize(pageSize);
+        pageInfo.setPageNum(pageNum);
+        pageInfo.setList(subList);
+        return pageInfo;
+    }
+
+    public static <T> PageResult<T> page(List<T> sources, int pageNum, int pageSize) {
+        return page(sources, pageNum, pageSize, null);
     }
 
 }
