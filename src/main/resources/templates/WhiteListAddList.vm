@@ -1,0 +1,18 @@
+<table>
+    <tbody>
+    <tr style="background: #f9f9f9;">
+        <th>对象名称</th>
+        <th>对象类型</th>
+        <th>所属开发组</th>
+        <th>治理项名称</th>
+    </tr>
+        #foreach($item in $list)
+        <tr>
+            <td style="border: 1px solid #ebeef5;padding: 16px;">${item.objectName}</td>
+            <td style="border: 1px solid #ebeef5;padding: 16px;">${item.modelName}</td>
+            <td style="border: 1px solid #ebeef5;padding: 16px;">${item.devGroupName}</td>
+            <td style="border: 1px solid #ebeef5;padding: 16px;">${item.instanceName}</td>
+        </tr>
+        #end
+    </tbody>
+</table>

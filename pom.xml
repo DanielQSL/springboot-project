@@ -317,6 +317,12 @@
             <artifactId>ohc-core</artifactId>
             <version>0.7.4</version>
         </dependency>
+        <!-- velocity模板引擎 -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.1</version>
+        </dependency>
         <!-- ↑↑↑↑↑=============第三方依赖=============↑↑↑↑↑ -->
     </dependencies>
 
