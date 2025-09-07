@@ -33,11 +33,15 @@ build/
 ### VS Code ###
 .vscode/
 
-### Temp File ###
+### 日志文件 ###
 *.log
+*.log.gz
+
+### Temp File ###
 *.tmp
 target/
 /**/target/
 *.cache
 *.diff
 *.patch
+*.class
